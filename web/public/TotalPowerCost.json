@@ -1,0 +1,18 @@
+[
+  { "algorithm": "Feasible graph", "dataset": "scenario1 dataset1", "Total Power Cost": 72 },
+  { "algorithm": "Fixed Param Tractable", "dataset": "scenario1 dataset1", "Total Power Cost": 66 },
+  { "algorithm": "Genetic", "dataset": "scenario1 dataset1", "Total Power Cost": 75 },
+  { "algorithm": "Greedy", "dataset": "scenario1 dataset1", "Total Power Cost": 63 },
+  { "algorithm": "Feasible graph", "dataset": "scenario2 dataset1", "Total Power Cost": 75 },
+  { "algorithm": "Fixed Param Tractable", "dataset": "scenario2 dataset1", "Total Power Cost": 59 },
+  { "algorithm": "Genetic", "dataset": "scenario2 dataset1", "Total Power Cost": 63 },
+  { "algorithm": "Greedy", "dataset": "scenario2 dataset1", "Total Power Cost": 50 },
+  { "algorithm": "Feasible graph", "dataset": "scenario3 dataset1", "Total Power Cost": 66 },
+  { "algorithm": "Fixed Param Tractable", "dataset": "scenario3 dataset1", "Total Power Cost": 44 },
+  { "algorithm": "Genetic", "dataset": "scenario3 dataset1", "Total Power Cost": 69 },
+  { "algorithm": "Greedy", "dataset": "scenario3 dataset1", "Total Power Cost": 47 },
+  { "algorithm": "Feasible graph", "dataset": "scenario4 dataset1", "Total Power Cost": 114 },
+  { "algorithm": "Fixed Param Tractable", "dataset": "scenario4 dataset1", "Total Power Cost": 102 },
+  { "algorithm": "Genetic", "dataset": "scenario4 dataset1", "Total Power Cost": 98 },
+  { "algorithm": "Greedy", "dataset": "scenario4 dataset1", "Total Power Cost": 92 }
+]

@@ -6,6 +6,6 @@ const ScenarioCollapse = () => {
     const onChange = (key) => {
         console.log(key);
     };
-    return <Collapse style={{width: '60%'}} items={scenarios} defaultActiveKey={['1']} onChange={onChange} />;
+    return <Collapse accordion style={{width: '60%'}} items={scenarios} defaultActiveKey={['1']} onChange={onChange} />;
 };
 export default ScenarioCollapse;

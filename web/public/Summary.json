@@ -1,0 +1,18 @@
+[
+  { "algorithm": "Feasible graph", "dataset": "scenario1 dataset1", "Running Time /ms": 14 },
+  { "algorithm": "Fixed Param Tractable", "dataset": "scenario1 dataset1", "Running Time /ms": 12 },
+  { "algorithm": "Genetic", "dataset": "scenario1 dataset1", "Running Time /ms": 11 },
+  { "algorithm": "Greedy", "dataset": "scenario1 dataset1", "Running Time /ms": 9 },
+  { "algorithm": "Feasible graph", "dataset": "scenario2 dataset1", "Running Time /ms": 20 },
+  { "algorithm": "Fixed Param Tractable", "dataset": "scenario2 dataset1", "Running Time /ms": 15 },
+  { "algorithm": "Genetic", "dataset": "scenario2 dataset1", "Running Time /ms": 13 },
+  { "algorithm": "Greedy", "dataset": "scenario2 dataset1", "Running Time /ms": 10 },
+  { "algorithm": "Feasible graph", "dataset": "scenario3 dataset1", "Running Time /ms": 13 },
+  { "algorithm": "Fixed Param Tractable", "dataset": "scenario3 dataset1", "Running Time /ms": 14 },
+  { "algorithm": "Genetic", "dataset": "scenario3 dataset1", "Running Time /ms": 11 },
+  { "algorithm": "Greedy", "dataset": "scenario3 dataset1", "Running Time /ms": 9 },
+  { "algorithm": "Feasible graph", "dataset": "scenario4 dataset1", "Running Time /ms": 23 },
+  { "algorithm": "Fixed Param Tractable", "dataset": "scenario4 dataset1", "Running Time /ms": 19 },
+  { "algorithm": "Genetic", "dataset": "scenario4 dataset1", "Running Time /ms": 11 },
+  { "algorithm": "Greedy", "dataset": "scenario4 dataset1", "Running Time /ms": 16 }
+]
