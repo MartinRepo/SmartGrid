@@ -24,16 +24,22 @@ int main() {
     };
     // test for fpt
     Table FPTConfiguration = FindOptimalConfiguration(Jobs);
-    cout<<"############## This is the final optimal solution ##############"<<endl;
+    cout<<"############## This is the FPT's solution ##############"<<endl;
     for(auto & a : FPTConfiguration) {
         cout<<"Job "<<a.id<<" is scheduled from "<<a.startTime<<" to "<<a.endTime<<endl;
     }
     // test for greedy
+    cout<<"############## This is the Greedy's solution ##############"<<endl;
     vector<pair<Config, int>> GreedySolution = greedyScheduler(Jobs, 4);
     for(const auto & a : GreedySolution) {
         cout << "Job "<<a.first.id << " is scheduled on machine " << a.second << " scheduling time is from " << a.first.startTime << " to " << a.first.endTime << endl;
     }
-
+    // test for feasible graph
+    cout<<"############## This is the Feasible Graph's solution ##############"<<endl;
+    vector<Config> feasible = offlineScheduling(Jobs, Jobs.size());
+    for(auto& a : feasible) {
+        cout<<"Job "<<a.id<<" is scheduled from "<<a.startTime<<" to "<<a.endTime<<endl;
+    }
 //    int a = calculateCost(optimalConfiguration, fptJobs, 14, 2);
 //    cout << "result cost is " << a << endl;
 //    vector<GeneticJob> geneticJobs = {
