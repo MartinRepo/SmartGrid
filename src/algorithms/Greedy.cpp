@@ -39,9 +39,7 @@ vector<pair<Config, int>> greedyScheduler(vector<Job>& jobs, int num_processors)
         }
         if (time >= currentJobReleaseTime) {
             while(!jobQueue.empty()) {
-                // 有任务被释放，先找当前时间负载最小的机器
                 int machineIndex = findLowestLoadMachines(processors);
-                // 分配job到那台机器
                 Job newJob = jobQueue.top();
                 processors[machineIndex].push(newJob.id);
                 Config config{newJob.id, time, time+newJob.width};
