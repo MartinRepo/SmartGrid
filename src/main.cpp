@@ -23,11 +23,15 @@ int main() {
             {10, 12, 14, 1, 1}
     };
     // test for fpt
+    auto start = chrono::high_resolution_clock::now();
     Table FPTConfiguration = FindOptimalConfiguration(Jobs);
+    auto end = chrono::high_resolution_clock::now();
+    chrono::duration<double, milli> duration = end - start;
     cout<<"############## This is the FPT's solution ##############"<<endl;
     for(auto & a : FPTConfiguration) {
         cout<<"Job "<<a.id<<" is scheduled from "<<a.startTime<<" to "<<a.endTime<<endl;
     }
+    cout << "Function took " << duration.count() << " ms.\n";
     // test for greedy
     cout<<"############## This is the Greedy's solution ##############"<<endl;
     vector<pair<Config, int>> GreedySolution = greedyScheduler(Jobs, 4);
