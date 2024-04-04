@@ -1,5 +1,3 @@
-#include "../../include/structs/Job.h"
-#include "../../include/structs/Config.h"
 #include "../../include/algorithms/Greedy.h"
 
 int calculateCost(queue<int>& processor, int power) {

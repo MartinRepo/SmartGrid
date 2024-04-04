@@ -4,27 +4,13 @@
 #include <ctime>
 #include <cstdlib>
 #include <random>
+#include "../../include/algorithms/Genetic.h"
 
 #define MAX_GENERATIONS 500
 using namespace std;
 
-struct GeneticJob {
-    int id;
-    int releaseTime;
-    int deadline;
-    int startTime;
-    int endTime;
-    int load;
-};
-
-// Define your solution structure here. For DSM, this might include a vector of power usages across time slots.
-struct Solution {
-    vector<GeneticJob> schedule;
-    double fitness = 0.0;
-};
-
 // calculate peak load
-int getPeakLoad(const Solution & solution) {
+int getPeakLoad(const Solution & solution, vector<Job> jobs) {
     int peakLoad = 0;
     int lastEndTime = 0;
     for(auto&job : solution.schedule) {
@@ -33,7 +19,7 @@ int getPeakLoad(const Solution & solution) {
     int currentLoad = 0;
     for(int i = 0; i<lastEndTime; i++) {
         for(auto&job : solution.schedule) {
-            if(job.startTime<=i && job.endTime>i) currentLoad += job.load;
+            if(job.startTime<=i && job.endTime>i) currentLoad += jobs[job.id].width;
         }
         if (currentLoad>peakLoad) peakLoad = currentLoad;
     }
@@ -41,22 +27,28 @@ int getPeakLoad(const Solution & solution) {
 }
 
 // Initialize your population
-void initializePopulation(vector<Solution>& population, int num, Solution iniSolution) {
-    // Generate random startTime
-    srand(static_cast<unsigned int>(time(0)));
-    // Generate { num } initial solutions
+void initializePopulation(vector<Job> jobs, vector<Solution>& population, int num, Solution iniSolution) {
     for(int i = 0; i<num; i++){
         population.push_back(iniSolution);
     }
     for(auto & solution : population) {
         for(auto & job : solution.schedule) {
-            job.startTime = job.releaseTime + rand() % (job.deadline - job.releaseTime - 1);
-            job.endTime = job.startTime + 1; // assume they are unit jobs
+            int timeRange = jobs[job.id].deadline - jobs[job.id].releaseTime - 1;
+            if (timeRange > 0) {
+                job.startTime = jobs[job.id].releaseTime + rand() % timeRange;
+            } else {
+                job.startTime = jobs[job.id].releaseTime;
+            }
+            job.endTime = job.startTime + jobs[job.id].width;
+            if (job.endTime >= jobs[job.id].deadline) {
+                job.endTime = jobs[job.id].deadline;
+                job.startTime = job.endTime - jobs[job.id].width;
+            }
         }
     }
 }
 
-void evaluateFitness(vector<Solution>& population) {
+void evaluateFitness(vector<Solution>& population, vector<Job>& jobs) {
     // calculate total cost of each solution
     for(auto& solution : population) {
         int lastestEndTime =  0;
@@ -64,14 +56,14 @@ void evaluateFitness(vector<Solution>& population) {
             if(job.endTime > lastestEndTime) lastestEndTime = job.endTime;
         }
         for(int i = 0; i<lastestEndTime; i++) {
-            vector<GeneticJob> jobSet;
+            vector<Config> jobSet;
             for(auto & job : solution.schedule) {
                 if(job.startTime<=i && job.endTime>i) jobSet.push_back(job);
             }
             // sum and power
             int sum = 0;
             for (auto job : jobSet) {
-                sum += job.load;
+                sum += jobs[job.id].width;
             }
             solution.fitness += pow(sum, 2);
         }
@@ -80,13 +72,13 @@ void evaluateFitness(vector<Solution>& population) {
 }
 
 // Selection
-Solution selectParent(vector<Solution>& population) {
+Solution selectParent(vector<Solution>& population, vector<Job>& jobs) {
     std::default_random_engine generator;
     std::uniform_real_distribution<double> distribution(0.0,1.0);
     vector<Solution> parents;
     int fitnessSum = 0;
     for(auto & solution : population) {
-        int fitness = getPeakLoad(solution);
+        int fitness = getPeakLoad(solution, jobs);
         solution.fitness = fitness;
         fitnessSum += fitness;
     }
@@ -124,7 +116,7 @@ pair<Solution, Solution> crossover(Solution& parent1, Solution& parent2) {
 }
 
 // Mutation
-void mutate(Solution& individual, double mutationRate) {
+void mutate(Solution& individual, double mutationRate, vector<Job> jobs) {
     std::random_device rd;
     std::default_random_engine generator(rd());
     // some problem in mutation
@@ -134,48 +126,59 @@ void mutate(Solution& individual, double mutationRate) {
         if(distribution(generator) < mutationRate) {
             job.startTime += geneDistribution(generator);
             job.endTime += geneDistribution(generator);
+            if (job.endTime >= jobs[job.id].deadline) {
+                job.endTime = jobs[job.id].deadline;
+                job.startTime = job.endTime - jobs[job.id].width;
+            }
+            else if (job.startTime <= jobs[job.id].releaseTime) {
+                job.startTime = jobs[job.id].releaseTime;
+                job.endTime = job.startTime + jobs[job.id].width;
+            }
+            if (job.startTime == job.endTime) {
+                job.startTime = job.endTime - jobs[job.id].width;
+            }
         }
     }
 
 }
 
 // Main GA loop
-void geneticAlgorithm(vector<GeneticJob> jobs, int solutionNum) {
+vector<Config> geneticAlgorithm(vector<Job> jobs, int solutionNum) {
+    srand(static_cast<unsigned int>(time(0)));
     vector<Solution> population;
+    Solution optimalSolution;
     Solution iniSolution;
-    iniSolution.schedule = std::move(jobs);
-    initializePopulation(population, solutionNum, iniSolution);
+    for(auto & job : jobs) {
+        iniSolution.schedule.push_back({job.id, job.releaseTime, job.releaseTime+job.width});
+    }
+    initializePopulation(jobs, population, solutionNum, iniSolution);
 
     for (int generation = 0; generation < MAX_GENERATIONS; ++generation) {
-        evaluateFitness(population);
+        evaluateFitness(population, jobs);
 
         vector<Solution> newPopulation;
         while (newPopulation.size() < population.size()) {
             // Selection
-            auto parent1 = selectParent(population);
-            auto parent2 = selectParent(population);
+            auto parent1 = selectParent(population, jobs);
+            auto parent2 = selectParent(population, jobs);
             // Crossover
             Solution child1, child2;
             pair<Solution, Solution> children = crossover(parent1, parent2);
             child1 = children.first;
             child2 = children.second;
             // Mutation
-            mutate(child1, 0.01);
-            mutate(child2, 0.01);
+            mutate(child1, 0.01, jobs);
+            mutate(child2, 0.01, jobs);
             // Add to new population
             newPopulation.push_back(child1);
             newPopulation.push_back(child2);
         }
         population = newPopulation;
         // Optionally, include some logic to check for the termination condition
-        Solution optimalSolution = population[0];
+        optimalSolution = population[0];
         for(auto& solution : population) {
             if(solution.fitness < optimalSolution.fitness) optimalSolution = solution;
         }
-        cout<<"--- This is " <<generation+1<<" generation, optimal solution is: ---"<<endl;
-        for(auto& job : optimalSolution.schedule) {
-            cout<<"job "<<job.id<<", starts at time "<<job.startTime<<" and ends at time "<<job.endTime<<endl;
-        }
     }
-    // Output the best solution
+    return optimalSolution.schedule;
 }

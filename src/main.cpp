@@ -42,12 +42,10 @@ int main() {
     }
 //    int a = calculateCost(optimalConfiguration, fptJobs, 14, 2);
 //    cout << "result cost is " << a << endl;
-//    vector<GeneticJob> geneticJobs = {
-//            {0, 1, 3, 0, 0, 2},
-//            {1, 1, 4, 0, 0, 3},
-//            {2, 0, 2, 0, 0, 1},
-//            {3, 2, 5, 0, 0, 1},
-//    };
-//    geneticAlgorithm(geneticJobs, 20);
+    cout<<"############## This is the Genetic's solution ##############"<<endl;
+    vector<Config> genetic = geneticAlgorithm(Jobs, 20);
+    for(auto& a : genetic) {
+        cout<<"Job "<<a.id<<" is scheduled from "<<a.startTime<<" to "<<a.endTime<<endl;
+    }
     return 0;
 }

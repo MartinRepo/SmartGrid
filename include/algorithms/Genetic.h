@@ -1,39 +1,29 @@
 #ifndef SMARTGRID_GENETIC_H
 #define SMARTGRID_GENETIC_H
 #include <vector>
+#include "../structs/Job.h"
+#include "../structs/Config.h"
 
 #define MAX_GENERATIONS 500
 using namespace std;
 
-struct GeneticJob {
-    int id;
-    int releaseTime;
-    int deadline;
-    int startTime;
-    int endTime;
-    int load;
-};
-
-// Define your solution structure here. For DSM, this might include a vector of power usages across time slots.
 struct Solution {
-    vector<GeneticJob> schedule;
+    vector<Config> schedule;
     double fitness = 0.0;
 };
 
-// calculate peak load
-int getPeakLoad(Solution & solution);
+int getPeakLoad(const Solution & solution, vector<Job> jobs);
 
-// initialize population
-void initializePopulation(vector<Solution>& population, int num, Solution iniSolution);
+void initializePopulation(vector<Job> jobs, vector<Solution>& population, int num, Solution iniSolution);
 
-void evaluateFitness(vector<Solution>& population);
+void evaluateFitness(vector<Solution>& population, vector<Job>& jobs);
 
-vector<Solution> selectParents(const vector<Solution>& population);
+Solution selectParent(vector<Solution>& population, vector<Job>& jobs);
 
-void crossover(Solution& parent1, Solution& parent2, Solution& child1, Solution& child2);
+pair<Solution, Solution> crossover(Solution& parent1, Solution& parent2);
 
-void mutate(Solution& individual);
+void mutate(Solution& individual, double mutationRate, vector<Job> jobs);
 
-void geneticAlgorithm(vector<GeneticJob> jobs, int solutionNum);
+vector<Config> geneticAlgorithm(vector<Job> jobs, int solutionNum);
 
 #endif //SMARTGRID_GENETIC_H

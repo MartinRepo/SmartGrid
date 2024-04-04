@@ -1,6 +1,8 @@
 #ifndef SMARTGRID_GREEDY_H
 #define SMARTGRID_GREEDY_H
 #include <queue>
+#include "../../include/structs/Job.h"
+#include "../../include/structs/Config.h"
 
 using namespace std;
 
