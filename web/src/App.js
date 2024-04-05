@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Selector from "./Selector/Selector";
 import ScenarioCollapse from "./ScenarioCollapse/ScenarioCollapse";
-import { Button, Tabs } from "antd";
+import { Button, Tabs, Timeline } from "antd";
+import { SmileOutlined, ClockCircleOutlined } from '@ant-design/icons';
 import { renderScatter, renderBar, renderSummary } from "./Chart/Chart";
 function App() {
     const [loading, setLoading] = useState(false);
@@ -35,7 +36,7 @@ function App() {
         setTimeout(() => {
             setLoading(false);
             setShowChart(true);
-        }, 2000); // 2000毫秒后执行
+        }, 2000);
     };
 
     const items = [
@@ -88,7 +89,79 @@ function App() {
             Check all of scenarios below
         </h2>
         <ScenarioCollapse/>
-        {showChart && <Tabs onChange={onChange} style={{width: '60%', marginTop: '20px'}} defaultActiveKey='1' tabPosition="top" items={items} />}
+        {showChart &&
+            <>
+            <h2>Performance Comparison Result</h2>
+            <Tabs onChange={onChange} style={{width: '60%', marginTop: '20px'}} defaultActiveKey='1' tabPosition="top" items={items} />
+            </>
+        }
+        <h2>Project Timeline</h2>
+        <Timeline mode='left'
+                  style={{ width: '80%' }}
+            items={[
+                {
+                    label: '2023-09-16',
+                    children: 'Start Project, studying literatures',
+                },
+                {
+                    label: '2023-09-26',
+                    children: 'Start Project Proposal',
+                },
+                {
+                    label: '2023-10-01',
+                    children: 'Start algorithms development simply',
+                },
+                {
+                    label: '2023-10-26',
+                    color: 'green',
+                    children: 'Complete Project Proposal',
+                },
+                {
+                    label: '2023-11-02',
+                    children: 'Implement algorithms detailed',
+                },
+                {
+                    label: '2024-01-15',
+                    color: 'green',
+                    children: 'Complete algorithms development for specific scenario',
+                },
+                {
+                    label: '2024-01-15',
+                    children: 'Start dissertation writing',
+                },
+                {
+                    label: '2024-03-14',
+                    color: 'green',
+                    children: 'Complete algorithms development for all scenarios',
+                },
+                {
+                    label: '2024-03-14',
+                    color: 'green',
+                    children: 'Prepare dataset for all scenarios',
+                },
+                {
+                    label: '2024-03-20',
+                    color: 'red',
+                    dot: <ClockCircleOutlined />,
+                    children: 'technical testing',
+                },
+                {
+                    label: '2024-04-01',
+                    color: 'green',
+                    children: 'Complete demo site, for better visualization',
+                },
+                {
+                    label: '2024-04-06',
+                    color: 'green',
+                    children: <p>Deploy demo site <a href='https://smart.grid'>https://smart.grid</a></p>,
+                },
+                {
+                    color: '#00CCFF',
+                    dot: <SmileOutlined />,
+                    children: 'Congrats! 🎉',
+                },
+            ]}
+        />
     </div>
   );
 }
