@@ -142,24 +142,6 @@ void mutate(Solution& individual, double mutationRate, vector<Job> jobs) {
 
 }
 
-int GeneticTotalCost(vector<Job> jobs, const vector<Config> &Solution, int boundary, int power){
-    int result = 0;
-    for (int i = 0; i < boundary; i++) {
-        vector<int> jobSet;
-        for (const auto &config : Solution) {
-            if (config.startTime <= i && config.endTime > i) {
-                jobSet.push_back(config.id);
-            }
-        }
-        int sum = 0;
-        for (auto it : jobSet) {
-            sum += jobs[it].height;
-        }
-        result += pow(sum, power);
-    }
-    return result;
-}
-
 // Main GA loop
 vector<Config> geneticAlgorithm(vector<Job> jobs, int solutionNum) {
     srand(static_cast<unsigned int>(time(0)));

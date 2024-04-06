@@ -11,9 +11,6 @@ using namespace std;
 
 using Table = vector<Config>;
 
-int FPTTotalCost(const Table &TLeft, const std::vector<Job> &jobs,
-                  const int boundary, const int power);
-
 bool isValid(const Config &config, const Job &job,
              std::pair<int, int> window);
 

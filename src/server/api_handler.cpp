@@ -4,6 +4,36 @@
 #include "../../include/algorithms/FeasibleGraph.h"
 #include "../../include/algorithms/Greedy.h"
 #include "../../include/algorithms/Genetic.h"
+#include "../../include/utils/TotalCost.h"
+
+json::value executeAlgorithms(const std::string& algorithmName, const std::string& datasetName, vector<Job>& dataset) {
+    vector<Config> solution;
+    int totalCost = 0;
+
+    if (algorithmName == "Fixed Param Tractable") {
+        solution = FindOptimalConfiguration(dataset);
+    } else if (algorithmName == "Feasible Graph") {
+        solution = offlineScheduling(dataset, 4);
+    } else if (algorithmName == "Genetic") {
+        solution = geneticAlgorithm(dataset, 20);
+    } else if (algorithmName == "Greedy") {
+        vector<pair<Config, int>> GreedySolution = greedyScheduler(dataset, 2);
+        totalCost = GreedyTotalCost(dataset, GreedySolution, 14, 2);
+        json::value result;
+        result[U("Algorithm")] = json::value::string(algorithmName);
+        result[U("Dataset")] = json::value::string(datasetName);
+        result[U("Total Power Cost")] = json::value::number(totalCost);
+        return result;
+    }
+
+    totalCost = GeneralTotalCost(dataset, solution, 14, 2); // 假设这个函数可以接受任何类型的解决方案
+
+    json::value result;
+    result[U("Algorithm")] = json::value::string(algorithmName);
+    result[U("Dataset")] = json::value::string(datasetName);
+    result[U("Total Power Cost")] = json::value::number(totalCost);
+    return result;
+}
 
 vector<json::value> RunAlgorithms(json::value input) {
     vector<Job> S1D1 = {
@@ -72,32 +102,43 @@ vector<json::value> RunAlgorithms(json::value input) {
         for(auto& dataset : datasets) {
             if(dataset == "scenario 1 dataset 1"){
                 // execute 4 algorithms on S1D1
-                vector<Config> FPTSolution = FindOptimalConfiguration(S1D1);
-                int FPTCost = FPTTotalCost(FPTSolution, S1D1, 14, 2);
-                result[U("Algorithm")] = json::value::string("Fixed Param Tractable");
-                result[U("Dataset")] = json::value::string("scenario 1 dataset 1");
-                result[U("Total Power Cost")] = json::value::number(FPTCost);
+                result = executeAlgorithms("Fixed Param Tractable", "scenario 1 dataset 1", S1D1);
                 results.push_back(result);
-
-                vector<pair<Config, int>> GreedySolution = greedyScheduler(S1D1, 2);
-                int GreedyCost = GreedyTotalCost(S1D1, GreedySolution, 14, 2);
-                result[U("Algorithm")] = json::value::string("Greedy");
-                result[U("Dataset")] = json::value::string("scenario 1 dataset 1");
-                result[U("Total Power Cost")] = json::value::number(GreedyCost);
+                result = executeAlgorithms("Feasible Graph", "scenario 1 dataset 1", S1D1);
                 results.push_back(result);
-
-                vector<Config> FeasibleGraphSolution = offlineScheduling(S1D1, 4);
-                int feasibleGraphTotalCost = FeasibleGraphTotalCost(FeasibleGraphSolution, S1D1, 14, 2);
-                result[U("Algorithm")] = json::value::string("Feasible Graph");
-                result[U("Dataset")] = json::value::string("scenario 1 dataset 1");
-                result[U("Total Power Cost")] = json::value::number(feasibleGraphTotalCost);
+                result = executeAlgorithms("Greedy", "scenario 1 dataset 1", S1D1);
                 results.push_back(result);
-
-                vector<Config> GeneticSolution = geneticAlgorithm(S1D1, 20);
-                int geneticTotalCost = GeneticTotalCost(S1D1, GeneticSolution, 14, 2);
-                result[U("Algorithm")] = json::value::string("Genetic");
-                result[U("Dataset")] = json::value::string("scenario 1 dataset 1");
-                result[U("Total Power Cost")] = json::value::number(geneticTotalCost);
+                result = executeAlgorithms("Genetic", "scenario 1 dataset 1", S1D1);
+                results.push_back(result);
+            } else if (dataset == "scenario 2 dataset 1"){
+                // execute 4 algorithms on S2D1
+                result = executeAlgorithms("Fixed Param Tractable", "scenario 2 dataset 1", S2D1);
+                results.push_back(result);
+                result = executeAlgorithms("Feasible Graph", "scenario 2 dataset 1", S2D1);
+                results.push_back(result);
+                result = executeAlgorithms("Greedy", "scenario 2 dataset 1", S2D1);
+                results.push_back(result);
+                result = executeAlgorithms("Genetic", "scenario 2 dataset 1", S2D1);
+                results.push_back(result);
+            } else if (dataset == "scenario 3 dataset 1"){
+                // execute 4 algorithms on S3D1
+                result = executeAlgorithms("Fixed Param Tractable", "scenario 3 dataset 1", S3D1);
+                results.push_back(result);
+                result = executeAlgorithms("Feasible Graph", "scenario 3 dataset 1", S3D1);
+                results.push_back(result);
+                result = executeAlgorithms("Greedy", "scenario 3 dataset 1", S3D1);
+                results.push_back(result);
+                result = executeAlgorithms("Genetic", "scenario 3 dataset 1", S3D1);
+                results.push_back(result);
+            } else if (dataset == "scenario 4 dataset 1"){
+                // execute 4 algorithms on S4D1
+                result = executeAlgorithms("Fixed Param Tractable", "scenario 4 dataset 1", S4D1);
+                results.push_back(result);
+                result = executeAlgorithms("Feasible Graph", "scenario 4 dataset 1", S4D1);
+                results.push_back(result);
+                result = executeAlgorithms("Greedy", "scenario 4 dataset 1", S4D1);
+                results.push_back(result);
+                result = executeAlgorithms("Genetic", "scenario 4 dataset 1", S4D1);
                 results.push_back(result);
             }
         }

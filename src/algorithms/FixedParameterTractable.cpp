@@ -1,27 +1,10 @@
 #include "../../include/algorithms/FixedParameterTractable.h"
+#include "../../include/utils/TotalCost.h"
 #include <algorithm>
 #include <cmath>
 #include <iostream>
 
 using namespace std;
-
-int FPTTotalCost(const Table &TLeft, const vector<Job> &jobs, const int boundary, const int power) {
-    int result = 0;
-    for (int i = 0; i < boundary; i++) {
-        vector<int> jobSet;
-        for (const auto &config : TLeft) {
-            if (config.startTime <= i && config.endTime > i) {
-                jobSet.push_back(config.id);
-            }
-        }
-        int sum = 0;
-        for (auto it : jobSet) {
-            sum += jobs[it].height;
-        }
-        result += pow(sum, power);
-    }
-    return result;
-}
 
 bool isValid(const Config &config, const Job &job,
              pair<int, int> window) {
@@ -139,7 +122,7 @@ Table FilterTable(const Table &TLeft, const vector<Job> &jobs, const int boundar
         }
     }
 //    cout <<"######################################################"<<endl;
-    int cost = FPTTotalCost(newTable, jobs, boundary, 2);
+    int cost = GeneralTotalCost(jobs, newTable, boundary, 2);
 //    cout << newTable.size() <<" jobs have been scheduled, and currently optimal cost is: " << cost << endl;
     return TLeft;
 }
