@@ -35,7 +35,7 @@ function App() {
     };
 
     const handleSelectorChange = values => {
-        setSelectedValues(values); // 更新状态为选中的值数组
+        setSelectedValues(values);
     };
     const handleClick = () => {
         setLoading(true);

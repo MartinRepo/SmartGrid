@@ -25,8 +25,12 @@ void handle_post(http_request request) {
         request.extract_json().then([&](json::value req_json) {
             auto results = RunAlgorithms(req_json);
 
+            json::value results_array = json::value::array();
+            for(size_t i = 0; i < results.size(); ++i) {
+                results_array[i] = results[i];
+            }
             json::value response_json = json::value::object();
-            response_json[U("algorithmResults")] = results;
+            response_json[U("algorithmResults")] = results_array;
 
             http_response http_response(status_codes::OK);
             http_response.set_body(response_json);

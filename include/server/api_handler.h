@@ -7,5 +7,5 @@
 using namespace std;
 using namespace web;
 
-json::value RunAlgorithms(json::value input);
+vector<json::value> RunAlgorithms(json::value input);
 #endif //SMARTGRID_API_HANDLER_H

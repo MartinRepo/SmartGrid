@@ -24,6 +24,8 @@ pair<Solution, Solution> crossover(Solution& parent1, Solution& parent2);
 
 void mutate(Solution& individual, double mutationRate, vector<Job> jobs);
 
+int GeneticTotalCost(vector<Job> jobs, const vector<Config> &Solution, int boundary, int power);
+
 vector<Config> geneticAlgorithm(vector<Job> jobs, int solutionNum);
 
 #endif //SMARTGRID_GENETIC_H

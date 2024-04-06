@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int calculateCost(const Table &TLeft, const vector<Job> &jobs, const int boundary, const int power) {
+int FPTTotalCost(const Table &TLeft, const vector<Job> &jobs, const int boundary, const int power) {
     int result = 0;
     for (int i = 0; i < boundary; i++) {
         vector<int> jobSet;
@@ -139,7 +139,7 @@ Table FilterTable(const Table &TLeft, const vector<Job> &jobs, const int boundar
         }
     }
 //    cout <<"######################################################"<<endl;
-    int cost = calculateCost(newTable, jobs, boundary, 2);
+    int cost = FPTTotalCost(newTable, jobs, boundary, 2);
 //    cout << newTable.size() <<" jobs have been scheduled, and currently optimal cost is: " << cost << endl;
     return TLeft;
 }

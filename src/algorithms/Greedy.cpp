@@ -1,4 +1,5 @@
 #include "../../include/algorithms/Greedy.h"
+#include <unordered_map>
 
 int calculateCost(queue<int>& processor, int power) {
     int load = pow(processor.size(), power);
@@ -17,6 +18,26 @@ int findLowestLoadMachines(vector<queue<int>>& processors) {
         }
     }
     return min_index;
+}
+
+int GreedyTotalCost(vector<Job> jobs, vector<pair<Config, int>> & Solution, const int boundary, const int power) {
+    int result = 0;
+    for (int i = 0; i < boundary; i++) {
+        unordered_map<int, vector<int>> processorJobSet;
+        for (const auto & config : Solution) {
+            if (config.first.startTime <= i && config.first.endTime > i) {
+                processorJobSet[config.second].push_back(config.first.id);
+            }
+        }
+        int sum = 0;
+        for (auto it : processorJobSet) {
+            for(auto id : it.second){
+                sum += jobs[id].height;
+            }
+        }
+        result += pow(sum, power);
+    }
+    return result;
 }
 
 vector<pair<Config, int>> greedyScheduler(vector<Job>& jobs, int num_processors) {

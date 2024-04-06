@@ -36,6 +36,24 @@ void executeShift(const vector<int> &path) {
     feasibleGraph[path[0]].push_back({path[0], tmpJob});
 }
 
+int FeasibleGraphTotalCost(const vector<Config> &Solution, const vector<Job> &jobs, const int boundary, const int power) {
+    int result = 0;
+    for (int i = 0; i < boundary; i++) {
+        vector<int> jobSet;
+        for (const auto &config : Solution) {
+            if (config.startTime <= i && config.endTime > i) {
+                jobSet.push_back(config.id);
+            }
+        }
+        int sum = 0;
+        for (auto it : jobSet) {
+            sum += jobs[it].height;
+        }
+        result += pow(sum, power);
+    }
+    return result;
+}
+
 vector<Config> offlineScheduling(vector<Job> &jobs, int numTimeSlots) {
     int numJobs = jobs.size();
 

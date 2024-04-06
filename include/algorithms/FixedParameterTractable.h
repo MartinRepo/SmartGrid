@@ -11,7 +11,7 @@ using namespace std;
 
 using Table = vector<Config>;
 
-int calculateCost(const Table &TLeft, const std::vector<Job> &jobs,
+int FPTTotalCost(const Table &TLeft, const std::vector<Job> &jobs,
                   const int boundary, const int power);
 
 bool isValid(const Config &config, const Job &job,
