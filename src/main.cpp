@@ -1,55 +1,63 @@
+#include <cpprest/http_listener.h>              // HTTP server
+#include <cpprest/json.h>                        // JSON library
 #include <iostream>
-#include <vector>
-#include "../include/structs/Job.h"
-#include "../include/algorithms/FixedParameterTractable.h"
-#include "../include/algorithms/FeasibleGraph.h"
 #include "../include/algorithms/Greedy.h"
-#include "../include/algorithms/Genetic.h"
+#include "../include/server/api_handler.h"
 
-using namespace std;
+using namespace web;
+using namespace web::http;
+using namespace web::http::experimental::listener;
+
+void handle_options(http_request request)
+{
+    http_response response(status_codes::OK);
+    response.headers().add(U("Allow"), U("GET, POST, OPTIONS"));
+    response.headers().add(U("Access-Control-Allow-Origin"), U("*"));
+    response.headers().add(U("Access-Control-Allow-Methods"), U("GET, POST, OPTIONS"));
+    response.headers().add(U("Access-Control-Allow-Headers"), U("Content-Type"));
+    request.reply(response);
+}
+
+void handle_post(http_request request) {
+    request.headers().add(U("Access-Control-Allow-Origin"), U("*"));
+    auto path = request.relative_uri().path();
+    if (path == U("/api/run-algorithms")) {
+        request.extract_json().then([&](json::value req_json) {
+            auto results = RunAlgorithms(req_json);
+
+            json::value response_json = json::value::object();
+            response_json[U("algorithmResults")] = results;
+
+            http_response http_response(status_codes::OK);
+            http_response.set_body(response_json);
+            http_response.headers().add(U("Access-Control-Allow-Origin"), U("*"));
+            request.reply(http_response);
+        }).wait();
+    } else {
+        request.reply(status_codes::NotFound, U("Not Found"));
+    }
+}
 
 int main() {
-    vector<Job> Jobs = {
-            {0, 1, 14, 1, 2},
-            {1, 0, 2, 1, 4},
-            {2, 3, 5, 1, 4},
-            {3, 4, 8, 1, 1},
-            {4, 5, 13, 1, 1},
-            {5, 6, 8, 1, 6},
-            {6, 7, 8, 1, 1},
-            {7, 9, 10, 1, 1},
-            {8, 10, 11, 1, 1},
-            {9, 11, 13, 1, 1},
-            {10, 12, 14, 1, 1}
-    };
-    // test for fpt
-    auto start = chrono::high_resolution_clock::now();
-    Table FPTConfiguration = FindOptimalConfiguration(Jobs);
-    auto end = chrono::high_resolution_clock::now();
-    chrono::duration<double, milli> duration = end - start;
-    cout<<"############## This is the FPT's solution ##############"<<endl;
-    for(auto & a : FPTConfiguration) {
-        cout<<"Job "<<a.id<<" is scheduled from "<<a.startTime<<" to "<<a.endTime<<endl;
+    uri_builder uri(U("http://localhost:8000"));
+    auto addr = uri.to_uri().to_string();
+    http_listener listener(addr);
+
+    listener.support(methods::OPTIONS, handle_options);
+    listener.support(methods::POST, handle_post);
+
+    try {
+        listener
+                .open()
+                .then([&listener](){std::cout << "Starting to listen at: " << listener.uri().to_string() << std::endl;})
+                .wait();
+
+        std::cout << "HTTP server is running... Press ENTER to exit." << std::endl;
+        std::string line;
+        std::getline(std::cin, line);
+    } catch (const std::exception &e) {
+        std::cerr << "An error occurred: " << e.what() << std::endl;
     }
-    cout << "Function took " << duration.count() << " ms.\n";
-    // test for greedy
-    cout<<"############## This is the Greedy's solution ##############"<<endl;
-    vector<pair<Config, int>> GreedySolution = greedyScheduler(Jobs, 4);
-    for(const auto & a : GreedySolution) {
-        cout << "Job "<<a.first.id << " is scheduled on machine " << a.second << " scheduling time is from " << a.first.startTime << " to " << a.first.endTime << endl;
-    }
-    // test for feasible graph
-    cout<<"############## This is the Feasible Graph's solution ##############"<<endl;
-    vector<Config> feasible = offlineScheduling(Jobs, Jobs.size());
-    for(auto& a : feasible) {
-        cout<<"Job "<<a.id<<" is scheduled from "<<a.startTime<<" to "<<a.endTime<<endl;
-    }
-//    int a = calculateCost(optimalConfiguration, fptJobs, 14, 2);
-//    cout << "result cost is " << a << endl;
-    cout<<"############## This is the Genetic's solution ##############"<<endl;
-    vector<Config> genetic = geneticAlgorithm(Jobs, 20);
-    for(auto& a : genetic) {
-        cout<<"Job "<<a.id<<" is scheduled from "<<a.startTime<<" to "<<a.endTime<<endl;
-    }
+
     return 0;
 }

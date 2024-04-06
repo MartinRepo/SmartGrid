@@ -1,10 +1,7 @@
 import React from 'react';
 import { Select, Space } from 'antd';
 import Options from './DataSource';
-const handleChange = (value) => {
-    console.log(`selected ${value}`);
-};
-const Selector = () => (
+const Selector = ({onChange}) => (
     <Space
         style={{
             width: '60%',
@@ -18,8 +15,10 @@ const Selector = () => (
                 width: '100%',
             }}
             placeholder="Please select"
-            defaultValue={['scenario 1 dataset 1', 'scenario 2 dataset 1']}
-            onChange={handleChange}
+            defaultValue={[]}
+            onChange={(values) => {
+                onChange(values);
+            }}
             options={Options}
         />
     </Space>

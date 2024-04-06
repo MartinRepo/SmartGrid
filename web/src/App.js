@@ -4,10 +4,13 @@ import ScenarioCollapse from "./ScenarioCollapse/ScenarioCollapse";
 import {Button, Tabs, Timeline} from "antd";
 import { SmileOutlined, ClockCircleOutlined } from '@ant-design/icons';
 import { renderScatter, renderBar, renderSummary } from "./Chart/Chart";
+import axios from 'axios';
 function App() {
     const [loading, setLoading] = useState(false);
     const [showChart, setShowChart] = useState(false);
     const [activeTabKey, setActiveTabKey] = useState('1');
+    const [selectedValues, setSelectedValues] = useState([]);
+
     useEffect(() => {
         if(activeTabKey === '1' && showChart) {
             setTimeout(() => {
@@ -31,12 +34,23 @@ function App() {
         setActiveTabKey(key);
     };
 
+    const handleSelectorChange = values => {
+        setSelectedValues(values); // 更新状态为选中的值数组
+    };
     const handleClick = () => {
         setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-            setShowChart(true);
-        }, 2000);
+        axios.post('http://localhost:8000/api/run-algorithms', {
+            selectedValues
+        })
+            .then(response => {
+                console.log(response.data);
+                setLoading(false);
+                setShowChart(true);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                setLoading(false);
+            });
     };
 
     const items = [
@@ -78,10 +92,10 @@ function App() {
         <h2>
             Choose some scenarios to compare
         </h2>
-        <Selector/>
+        <Selector onChange={handleSelectorChange}/>
         {!loading ?
             <div style={{ display: 'flex', justifyContent: 'center', width: '60%', marginTop: '10px'}}>
-                <Button style={{ width: '40%' }} type="primary" block onClick={handleClick} > Compare! </Button>
+                <Button style={{ width: '40%' }} type="primary" block disabled={selectedValues.length === 0} onClick={handleClick} > Compare! </Button>
             </div>
             :
             <div style={{ display: 'flex', justifyContent: 'center', width: '60%', marginTop: '10px'}}>
