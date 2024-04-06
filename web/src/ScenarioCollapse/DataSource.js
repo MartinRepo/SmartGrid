@@ -233,22 +233,34 @@ const scenarios = [
     {
         key: '1',
         label: 'Scenario 1',
-        children: <Collapse accordion defaultActiveKey="1" items={s1DataSource} />,
+        children:   <>
+                    <strong>unit duration, unit power cost</strong>
+                    <Collapse accordion items={s1DataSource} />
+                    </>,
     },
     {
         key: '2',
         label: 'Scenario 2',
-        children: <Collapse accordion defaultActiveKey="1" items={s2DataSource} />,
+        children:   <>
+                    <strong>unit duration, arbitrary power cost</strong>
+                    <Collapse accordion items={s2DataSource} />
+                    </>,
     },
     {
         key: '3',
         label: 'Scenario 3',
-        children: <Collapse accordion defaultActiveKey="1" items={s3DataSource} />,
+        children:   <>
+                    <strong>arbitrary duration, unit power cost</strong>
+                    <Collapse accordion items={s3DataSource} />
+                    </>,
     },
     {
         key: '4',
         label: 'Scenario 4',
-        children: <Collapse accordion defaultActiveKey="1" items={s4DataSource} />,
+        children:   <>
+                    <strong>arbitrary duration, arbitrary power cost</strong>
+                    <Collapse accordion items={s4DataSource} />
+                    </>,
     },
 ];
 

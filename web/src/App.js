@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Selector from "./Selector/Selector";
 import ScenarioCollapse from "./ScenarioCollapse/ScenarioCollapse";
-import { Button, Tabs, Timeline } from "antd";
+import {Button, Tabs, Timeline} from "antd";
 import { SmileOutlined, ClockCircleOutlined } from '@ant-design/icons';
 import { renderScatter, renderBar, renderSummary } from "./Chart/Chart";
 function App() {
@@ -61,8 +61,8 @@ function App() {
             children:
                 <>
                     <div id="container-4" style={{width: '80%', height: '300px' }}> <strong>Summary for Total Power Cost</strong> </div>
-                <div id="container-5" style={{width: '80%', height: '300px' }}> <strong> Summary for Peak Power Cost </strong> </div>
-                <div id="container-6" style={{width: '80%', height: '300px' }}> <strong> Summary for Running Time </strong> </div>
+                    <div id="container-5" style={{width: '80%', height: '300px' }}> <strong> Summary for Peak Power Cost </strong> </div>
+                    <div id="container-6" style={{width: '80%', height: '300px' }}> <strong> Summary for Running Time </strong> </div>
                 </>
         }
     ];
@@ -70,8 +70,11 @@ function App() {
   return (
     <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center'}}>
         <h1>
-            Scheduling for Smart Grid (Demo Site)
+            SCHEDULING FOR SMART GRID
         </h1>
+        <h2>
+            DEMO SITE
+        </h2>
         <h2>
             Choose some scenarios to compare
         </h2>
@@ -153,7 +156,7 @@ function App() {
                 {
                     label: '2024-04-06',
                     color: 'green',
-                    children: <p>Deploy demo site <a href='https://smart.grid'>https://smart.grid</a></p>,
+                    children: <p>Deploy demo site <a href='https://demo-smartgrid.tech'>https://demo-smartgrid.tech</a></p>,
                 },
                 {
                     color: '#00CCFF',
