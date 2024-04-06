@@ -3,18 +3,19 @@ import Selector from "./Selector/Selector";
 import ScenarioCollapse from "./ScenarioCollapse/ScenarioCollapse";
 import {Button, Tabs, Timeline} from "antd";
 import { SmileOutlined, ClockCircleOutlined } from '@ant-design/icons';
-import { renderScatter, renderBar, renderSummary } from "./Chart/Chart";
+import { renderTPScatter, renderScatter, renderBar, renderSummary } from "./Chart/Chart";
 import axios from 'axios';
 function App() {
     const [loading, setLoading] = useState(false);
     const [showChart, setShowChart] = useState(false);
     const [activeTabKey, setActiveTabKey] = useState('1');
     const [selectedValues, setSelectedValues] = useState([]);
+    const [totalCost, setTotalCost] = useState([]);
 
     useEffect(() => {
         if(activeTabKey === '1' && showChart) {
             setTimeout(() => {
-                renderScatter(`container-${activeTabKey}`, "./TotalPowerCost.json", "Total Power Cost");
+                renderTPScatter(`container-${activeTabKey}`, totalCost, "Total Power Cost");
             }, 50);
         }else if(activeTabKey === '2' && showChart) {
             setTimeout(() => {
@@ -44,6 +45,7 @@ function App() {
         })
             .then(response => {
                 console.log(response.data);
+                setTotalCost(response.data.algorithmResults);
                 setLoading(false);
                 setShowChart(true);
             })

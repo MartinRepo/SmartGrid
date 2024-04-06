@@ -20,17 +20,17 @@ json::value executeAlgorithms(const std::string& algorithmName, const std::strin
         vector<pair<Config, int>> GreedySolution = greedyScheduler(dataset, 2);
         totalCost = GreedyTotalCost(dataset, GreedySolution, 14, 2);
         json::value result;
-        result[U("Algorithm")] = json::value::string(algorithmName);
-        result[U("Dataset")] = json::value::string(datasetName);
+        result[U("algorithm")] = json::value::string(algorithmName);
+        result[U("dataset")] = json::value::string(datasetName);
         result[U("Total Power Cost")] = json::value::number(totalCost);
         return result;
     }
 
-    totalCost = GeneralTotalCost(dataset, solution, 14, 2); // 假设这个函数可以接受任何类型的解决方案
+    totalCost = GeneralTotalCost(dataset, solution, 14, 2);
 
     json::value result;
-    result[U("Algorithm")] = json::value::string(algorithmName);
-    result[U("Dataset")] = json::value::string(datasetName);
+    result[U("algorithm")] = json::value::string(algorithmName);
+    result[U("dataset")] = json::value::string(datasetName);
     result[U("Total Power Cost")] = json::value::number(totalCost);
     return result;
 }
@@ -63,12 +63,12 @@ vector<json::value> RunAlgorithms(json::value input) {
             {10, 12, 14, 1, 1}
     };
     vector<Job> S3D1 = {
-            {0, 1, 14, 1, 2},
-            {1, 0, 2, 1, 4},
-            {2, 3, 5, 1, 4},
-            {3, 4, 8, 1, 1},
-            {4, 5, 13, 1, 1},
-            {5, 6, 8, 1, 6},
+            {0, 1, 14, 4, 1},
+            {1, 0, 2, 1, 1},
+            {2, 3, 5, 1, 1},
+            {3, 4, 8, 2, 1},
+            {4, 5, 13, 3, 1},
+            {5, 6, 8, 1, 1},
             {6, 7, 8, 1, 1},
             {7, 9, 10, 1, 1},
             {8, 10, 11, 1, 1},
@@ -76,11 +76,11 @@ vector<json::value> RunAlgorithms(json::value input) {
             {10, 12, 14, 1, 1}
     };
     vector<Job> S4D1 = {
-            {0, 1, 14, 1, 2},
+            {0, 1, 14, 4, 2},
             {1, 0, 2, 1, 4},
             {2, 3, 5, 1, 4},
-            {3, 4, 8, 1, 1},
-            {4, 5, 13, 1, 1},
+            {3, 4, 8, 2, 1},
+            {4, 5, 13, 3, 1},
             {5, 6, 8, 1, 6},
             {6, 7, 8, 1, 1},
             {7, 9, 10, 1, 1},
