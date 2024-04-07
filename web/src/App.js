@@ -12,6 +12,7 @@ function App() {
     const [selectedValues, setSelectedValues] = useState([]);
     const [totalCost, setTotalCost] = useState([]);
     const [peakCost, setPeakCost] = useState([]);
+    const [runningTime, setRunningTime] = useState([]);
 
     useEffect(() => {
         if(activeTabKey === '1' && showChart) {
@@ -24,14 +25,14 @@ function App() {
             }, 50);
         }else if(activeTabKey === '3' && showChart) {
             setTimeout(() => {
-                renderBar(`container-${activeTabKey}`, "./RunningTime.json");
+                renderBar(`container-${activeTabKey}`, runningTime);
             }, 50);
         }else if(activeTabKey === '4' && showChart) {
             setTimeout(() => {
-                renderSummary();
+                renderSummary(totalCost, peakCost, runningTime);
             }, 50);
         }
-    }, [activeTabKey, showChart, totalCost, peakCost]);
+    }, [activeTabKey, showChart, totalCost, peakCost, runningTime]);
     const onChange = (key) => {
         setActiveTabKey(key);
     };
@@ -48,6 +49,7 @@ function App() {
                 console.log(response.data);
                 setTotalCost(response.data.TotalCost);
                 setPeakCost(response.data.PeakCost);
+                setRunningTime(response.data.RunningTime);
                 setLoading(false);
                 setShowChart(true);
             })

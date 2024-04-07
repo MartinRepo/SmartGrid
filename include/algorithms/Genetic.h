@@ -4,7 +4,7 @@
 #include "../structs/Job.h"
 #include "../structs/Config.h"
 
-#define MAX_GENERATIONS 500
+#define MAX_GENERATIONS 300
 using namespace std;
 
 struct Solution {

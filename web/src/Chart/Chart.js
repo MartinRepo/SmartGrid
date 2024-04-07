@@ -15,16 +15,16 @@ const renderScatter = (containerId, dataSource, yAxis) => {
     chart.render();
 }
 
-const renderBar = (containerId, dataPath) => {
+const renderBar = (containerId, dataSource) => {
     const chart = new Chart({
         container: containerId,
         autoFit: true,
     });
 
     chart.interval()
-        .data({type: "fetch", value: dataPath})
+        .data(dataSource)
         .encode('x', 'dataset')
-        .encode('y', 'Running Time /ms')
+        .encode('y', 'Running Time /µs')
         .encode('color', 'algorithm')
         .transform({ type: 'dodgeX' })
         .interaction('elementHighlight', { background: true });
@@ -32,107 +32,62 @@ const renderBar = (containerId, dataPath) => {
     chart.render();
 }
 
-const renderSummary = () => {
-    fetch('./TotalPowerCost.json')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            const algorithms = [...new Set(data.map(item => item.algorithm))];
-            let processedData = [];
-            algorithms.forEach(algorithm => {
-                const costs = data.filter(item => item.algorithm === algorithm).map(item => item['Total Power Cost']);
-                const maxCost = Math.max(...costs);
-                const minCost = Math.min(...costs);
-                processedData.push({ algorithm, max: maxCost, min: minCost });
-            });
-            const chart = new Chart({
-                container: 'container-4',
-                autoFit: true,
-            });
-            chart.interval()
-                .data(processedData)
-                .encode('x', 'algorithm')
-                .encode('y', ['min', 'max'])
-                .encode('color', 'algorithm')
-                .axis('y', { labelFormatter: '~s' })
-                .tooltip(['min', 'max']);
+function processData(data, name) {
+    const algorithms = [...new Set(data.map(item => item.algorithm))];
+    let processedData = [];
+    algorithms.forEach(algorithm => {
+        const costs = data.filter(item => item.algorithm === algorithm).map(item => item[name]);
+        const maxCost = Math.max(...costs);
+        const minCost = Math.min(...costs);
+        processedData.push({ algorithm, max: maxCost, min: minCost });
+    });
+    return processedData;
+}
+const renderSummary = (totalCost, peakCost, runningTime) => {
+    let processedData = processData(totalCost, 'Total Power Cost');
 
-            chart.render();
-        })
-        .catch(error => {
-            console.error('There has been a problem with your fetch operation:', error);
-        });
+    let chart = new Chart({
+        container: 'container-4',
+        autoFit: true,
+    });
+    chart.interval()
+        .data(processedData)
+        .encode('x', 'algorithm')
+        .encode('y', ['min', 'max'])
+        .encode('color', 'algorithm')
+        .axis('y', { labelFormatter: '~s' })
+        .tooltip(['min', 'max']);
 
-    fetch('./PeakPowerCost.json')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            const algorithms = [...new Set(data.map(item => item.algorithm))];
-            let processedData = [];
-            algorithms.forEach(algorithm => {
-                const costs = data.filter(item => item.algorithm === algorithm).map(item => item['Peak Power Cost']);
-                const maxCost = Math.max(...costs);
-                const minCost = Math.min(...costs);
-                processedData.push({ algorithm, max: maxCost, min: minCost });
-            });
-            const chart = new Chart({
-                container: 'container-5',
-                autoFit: true,
-            });
-            chart.interval()
-                .data(processedData)
-                .encode('x', 'algorithm')
-                .encode('y', ['min', 'max'])
-                .encode('color', 'algorithm')
-                .axis('y', { labelFormatter: '~s' })
-                .tooltip(['min', 'max']);
+    chart.render();
 
-            chart.render();
-        })
-        .catch(error => {
-            console.error('There has been a problem with your fetch operation:', error);
-        });
+    processedData = processData(peakCost, 'Peak Power Cost');
+    chart = new Chart({
+        container: 'container-5',
+        autoFit: true,
+    });
+    chart.interval()
+        .data(processedData)
+        .encode('x', 'algorithm')
+        .encode('y', ['min', 'max'])
+        .encode('color', 'algorithm')
+        .axis('y', { labelFormatter: '~s' })
+        .tooltip(['min', 'max']);
 
-    fetch('./RunningTime.json')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            const algorithms = [...new Set(data.map(item => item.algorithm))];
-            let processedData = [];
-            algorithms.forEach(algorithm => {
-                const costs = data.filter(item => item.algorithm === algorithm).map(item => item['Running Time /ms']);
-                const maxCost = Math.max(...costs);
-                const minCost = Math.min(...costs);
-                processedData.push({ algorithm, max: maxCost, min: minCost });
-            });
-            const chart = new Chart({
-                container: 'container-6',
-                autoFit: true,
-            });
-            chart.interval()
-                .data(processedData)
-                .encode('x', 'algorithm')
-                .encode('y', ['min', 'max'])
-                .encode('color', 'algorithm')
-                .axis('y', { labelFormatter: '~s' })
-                .tooltip(['min', 'max'])
+    chart.render();
 
-            chart.render();
-        })
-        .catch(error => {
-            console.error('There has been a problem with your fetch operation:', error);
-        });
+    processedData = processData(runningTime, 'Running Time /µs');
+    chart = new Chart({
+        container: 'container-6',
+        autoFit: true,
+    });
+    chart.interval()
+        .data(processedData)
+        .encode('x', 'algorithm')
+        .encode('y', ['min', 'max'])
+        .encode('color', 'algorithm')
+        .axis('y', { labelFormatter: '~s' })
+        .tooltip(['min', 'max'])
+
+    chart.render();
 }
 export { renderScatter, renderBar, renderSummary };

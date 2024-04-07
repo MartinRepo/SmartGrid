@@ -1,5 +1,5 @@
+#include <chrono>
 #include "../../include/server/api_handler.h"
-#include "../../include/structs/Job.h"
 #include "../../include/algorithms/FixedParameterTractable.h"
 #include "../../include/algorithms/FeasibleGraph.h"
 #include "../../include/algorithms/Greedy.h"
@@ -65,6 +65,27 @@ json::value getPeakCost(const std::string& algorithmName, const std::string& dat
     return result;
 }
 
+json::value getRunningTime(const std::string& algorithmName, const std::string& datasetName, vector<Job>& dataset) {
+    auto start = std::chrono::high_resolution_clock::now();
+    if (algorithmName == "Fixed Param Tractable") {
+        vector<Config> solution = FindOptimalConfiguration(dataset);
+    } else if (algorithmName == "Feasible Graph") {
+        vector<Config> solution = offlineScheduling(dataset, 4);
+    } else if (algorithmName == "Genetic") {
+        vector<Config> solution = geneticAlgorithm(dataset, 20);
+    } else if (algorithmName == "Greedy") {
+        vector<pair<Config, int>> GreedySolution = greedyScheduler(dataset, 2);
+    }
+    auto end = chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+
+    json::value result;
+    result[U("algorithm")] = json::value::string(algorithmName);
+    result[U("dataset")] = json::value::string(datasetName);
+    result[U("Running Time /µs")] = json::value::number(duration.count());
+    return result;
+}
+
 vector<vector<json::value>> RunAlgorithms(json::value input) {
     vector<Job> S1D1 = {
             {0, 1, 14, 1, 1},
@@ -127,7 +148,7 @@ vector<vector<json::value>> RunAlgorithms(json::value input) {
                 datasets.push_back(value.as_string());
             }
         }
-        vector<vector<json::value>> results(2);
+        vector<vector<json::value>> results(3);
         json::value result = json::value::object();
         for(auto& dataset : datasets) {
             if(dataset == "scenario 1 dataset 1"){
@@ -148,6 +169,14 @@ vector<vector<json::value>> RunAlgorithms(json::value input) {
                 results[1].push_back(result);
                 result = getPeakCost("Genetic", "scenario 1 dataset 1", S1D1);
                 results[1].push_back(result);
+                result = getRunningTime("Fixed Param Tractable", "scenario 1 dataset 1", S1D1);
+                results[2].push_back(result);
+                result = getRunningTime("Feasible Graph", "scenario 1 dataset 1", S1D1);
+                results[2].push_back(result);
+                result = getRunningTime("Greedy", "scenario 1 dataset 1", S1D1);
+                results[2].push_back(result);
+                result = getRunningTime("Genetic", "scenario 1 dataset 1", S1D1);
+                results[2].push_back(result);
             } else if (dataset == "scenario 2 dataset 1"){
                 // execute 4 algorithms on S2D1
                 result = getTotalCost("Fixed Param Tractable", "scenario 2 dataset 1", S2D1);
@@ -166,6 +195,14 @@ vector<vector<json::value>> RunAlgorithms(json::value input) {
                 results[1].push_back(result);
                 result = getPeakCost("Genetic", "scenario 2 dataset 1", S2D1);
                 results[1].push_back(result);
+                result = getRunningTime("Fixed Param Tractable", "scenario 2 dataset 1", S2D1);
+                results[2].push_back(result);
+                result = getRunningTime("Feasible Graph", "scenario 2 dataset 1", S2D1);
+                results[2].push_back(result);
+                result = getRunningTime("Greedy", "scenario 2 dataset 1", S2D1);
+                results[2].push_back(result);
+                result = getRunningTime("Genetic", "scenario 2 dataset 1", S2D1);
+                results[2].push_back(result);
             } else if (dataset == "scenario 3 dataset 1"){
                 // execute 4 algorithms on S3D1
                 result = getTotalCost("Fixed Param Tractable", "scenario 3 dataset 1", S3D1);
@@ -184,6 +221,14 @@ vector<vector<json::value>> RunAlgorithms(json::value input) {
                 results[1].push_back(result);
                 result = getPeakCost("Genetic", "scenario 3 dataset 1", S3D1);
                 results[1].push_back(result);
+                result = getRunningTime("Fixed Param Tractable", "scenario 3 dataset 1", S3D1);
+                results[2].push_back(result);
+                result = getRunningTime("Feasible Graph", "scenario 3 dataset 1", S3D1);
+                results[2].push_back(result);
+                result = getRunningTime("Greedy", "scenario 3 dataset 1", S3D1);
+                results[2].push_back(result);
+                result = getRunningTime("Genetic", "scenario 3 dataset 1", S3D1);
+                results[2].push_back(result);
             } else if (dataset == "scenario 4 dataset 1"){
                 // execute 4 algorithms on S4D1
                 result = getTotalCost("Fixed Param Tractable", "scenario 4 dataset 1", S4D1);
@@ -202,6 +247,14 @@ vector<vector<json::value>> RunAlgorithms(json::value input) {
                 results[1].push_back(result);
                 result = getPeakCost("Genetic", "scenario 4 dataset 1", S4D1);
                 results[1].push_back(result);
+                result = getRunningTime("Fixed Param Tractable", "scenario 4 dataset 1", S4D1);
+                results[2].push_back(result);
+                result = getRunningTime("Feasible Graph", "scenario 4 dataset 1", S4D1);
+                results[2].push_back(result);
+                result = getRunningTime("Greedy", "scenario 4 dataset 1", S4D1);
+                results[2].push_back(result);
+                result = getRunningTime("Genetic", "scenario 4 dataset 1", S4D1);
+                results[2].push_back(result);
             }
         }
         return results;

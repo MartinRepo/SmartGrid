@@ -35,6 +35,8 @@ void handle_post(http_request request) {
                     response_json[U("TotalCost")] = inner_array;
                 } else if(i==1) {
                     response_json[U("PeakCost")] = inner_array;
+                } else if(i==2) {
+                    response_json[U("RunningTime")] = inner_array;
                 }
             }
 

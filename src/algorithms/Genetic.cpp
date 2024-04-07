@@ -6,7 +6,7 @@
 #include <random>
 #include "../../include/algorithms/Genetic.h"
 
-#define MAX_GENERATIONS 500
+#define MAX_GENERATIONS 300
 using namespace std;
 
 // calculate peak load
