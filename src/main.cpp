@@ -25,12 +25,18 @@ void handle_post(http_request request) {
         request.extract_json().then([&](json::value req_json) {
             auto results = RunAlgorithms(req_json);
 
-            json::value results_array = json::value::array();
-            for(size_t i = 0; i < results.size(); ++i) {
-                results_array[i] = results[i];
-            }
             json::value response_json = json::value::object();
-            response_json[U("algorithmResults")] = results_array;
+            for (size_t i = 0; i < results.size(); ++i) {
+                json::value inner_array = json::value::array();
+                for (size_t j = 0; j < results[i].size(); ++j) {
+                    inner_array[j] = results[i][j];
+                }
+                if(i==0) {
+                    response_json[U("TotalCost")] = inner_array;
+                } else if(i==1) {
+                    response_json[U("PeakCost")] = inner_array;
+                }
+            }
 
             http_response http_response(status_codes::OK);
             http_response.set_body(response_json);

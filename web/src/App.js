@@ -3,7 +3,7 @@ import Selector from "./Selector/Selector";
 import ScenarioCollapse from "./ScenarioCollapse/ScenarioCollapse";
 import {Button, Tabs, Timeline} from "antd";
 import { SmileOutlined, ClockCircleOutlined } from '@ant-design/icons';
-import { renderTPScatter, renderScatter, renderBar, renderSummary } from "./Chart/Chart";
+import { renderScatter, renderBar, renderSummary } from "./Chart/Chart";
 import axios from 'axios';
 function App() {
     const [loading, setLoading] = useState(false);
@@ -11,15 +11,16 @@ function App() {
     const [activeTabKey, setActiveTabKey] = useState('1');
     const [selectedValues, setSelectedValues] = useState([]);
     const [totalCost, setTotalCost] = useState([]);
+    const [peakCost, setPeakCost] = useState([]);
 
     useEffect(() => {
         if(activeTabKey === '1' && showChart) {
             setTimeout(() => {
-                renderTPScatter(`container-${activeTabKey}`, totalCost, "Total Power Cost");
+                renderScatter(`container-${activeTabKey}`, totalCost, "Total Power Cost");
             }, 50);
         }else if(activeTabKey === '2' && showChart) {
             setTimeout(() => {
-                renderScatter(`container-${activeTabKey}`, "./PeakPowerCost.json", "Peak Power Cost");
+                renderScatter(`container-${activeTabKey}`, peakCost, "Peak Power Cost");
             }, 50);
         }else if(activeTabKey === '3' && showChart) {
             setTimeout(() => {
@@ -30,7 +31,7 @@ function App() {
                 renderSummary();
             }, 50);
         }
-    }, [activeTabKey, showChart]);
+    }, [activeTabKey, showChart, totalCost, peakCost]);
     const onChange = (key) => {
         setActiveTabKey(key);
     };
@@ -45,7 +46,8 @@ function App() {
         })
             .then(response => {
                 console.log(response.data);
-                setTotalCost(response.data.algorithmResults);
+                setTotalCost(response.data.TotalCost);
+                setPeakCost(response.data.PeakCost);
                 setLoading(false);
                 setShowChart(true);
             })
@@ -59,26 +61,26 @@ function App() {
         {
             key: '1',
             label: 'Total power cost',
-            children: <div id="container-1" style={{width: '80%', height: '300px' }}></div>,
+            children: <div id="container-1" style={{width: '80%', height: '500px' }}></div>,
         },
         {
             key: '2',
             label: 'Peak cost',
-            children: <div id="container-2" style={{width: '80%', height: '300px' }}></div>,
+            children: <div id="container-2" style={{width: '80%', height: '500px' }}></div>,
         },
         {
             key: '3',
             label: 'Running time',
-            children: <div id="container-3" style={{width: '80%', height: '300px' }}></div>,
+            children: <div id="container-3" style={{width: '80%', height: '500px' }}></div>,
         },
         {
             key: '4',
             label: 'Summary',
             children:
                 <>
-                    <div id="container-4" style={{width: '80%', height: '300px' }}> <strong>Summary for Total Power Cost</strong> </div>
-                    <div id="container-5" style={{width: '80%', height: '300px' }}> <strong> Summary for Peak Power Cost </strong> </div>
-                    <div id="container-6" style={{width: '80%', height: '300px' }}> <strong> Summary for Running Time </strong> </div>
+                    <div id="container-4" style={{width: '80%', height: '500px' }}> <strong>Summary for Total Power Cost</strong> </div>
+                    <div id="container-5" style={{width: '80%', height: '500px' }}> <strong> Summary for Peak Power Cost </strong> </div>
+                    <div id="container-6" style={{width: '80%', height: '500px' }}> <strong> Summary for Running Time </strong> </div>
                 </>
         }
     ];

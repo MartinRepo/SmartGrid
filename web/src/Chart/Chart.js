@@ -1,5 +1,5 @@
 import { Chart } from '@antv/g2';
-const renderTPScatter = (containerId, dataSource, yAxis) => {
+const renderScatter = (containerId, dataSource, yAxis) => {
     const chart = new Chart({
         container: containerId,
         autoFit: true,
@@ -7,21 +7,6 @@ const renderTPScatter = (containerId, dataSource, yAxis) => {
 
     chart.point()
         .data(dataSource)
-        .encode('x', 'dataset')
-        .encode('y', yAxis)
-        .encode('color', 'algorithm')
-        .encode('shape', 'hexagon');
-
-    chart.render();
-}
-const renderScatter = (containerId, dataPath, yAxis) => {
-    const chart = new Chart({
-        container: containerId,
-        autoFit: true,
-    });
-
-    chart.point()
-        .data({type: "fetch", value: dataPath})
         .encode('x', 'dataset')
         .encode('y', yAxis)
         .encode('color', 'algorithm')
@@ -150,4 +135,4 @@ const renderSummary = () => {
             console.error('There has been a problem with your fetch operation:', error);
         });
 }
-export { renderTPScatter, renderScatter, renderBar, renderSummary };
+export { renderScatter, renderBar, renderSummary };
