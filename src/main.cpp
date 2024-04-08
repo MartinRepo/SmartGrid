@@ -1,12 +1,20 @@
 #include <cpprest/http_listener.h>              // HTTP server
 #include <cpprest/json.h>                        // JSON library
 #include <iostream>
+#include <csignal>
+#include <thread>
 #include "../include/algorithms/Greedy.h"
 #include "../include/server/api_handler.h"
 
 using namespace web;
 using namespace web::http;
 using namespace web::http::experimental::listener;
+
+volatile sig_atomic_t stop;
+
+void inthand(int signum) {
+    stop = 1;
+}
 
 void handle_options(http_request request)
 {
@@ -51,7 +59,9 @@ void handle_post(http_request request) {
 }
 
 int main() {
-    uri_builder uri(U("http://localhost:8000"));
+    signal(SIGINT, inthand);
+    signal(SIGTERM, inthand);
+    uri_builder uri(U("http://0.0.0.0:8000"));
     auto addr = uri.to_uri().to_string();
     http_listener listener(addr);
 
@@ -61,12 +71,11 @@ int main() {
     try {
         listener
                 .open()
-                .then([&listener](){std::cout << "Starting to listen at: " << listener.uri().to_string() << std::endl;})
+                .then([&listener](){std::cout << "Server is running at: " << listener.uri().to_string() << std::endl;})
                 .wait();
-
-        std::cout << "HTTP server is running... Press ENTER to exit." << std::endl;
-        std::string line;
-        std::getline(std::cin, line);
+        while(!stop){
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+        }
     } catch (const std::exception &e) {
         std::cerr << "An error occurred: " << e.what() << std::endl;
     }

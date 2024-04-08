@@ -4,6 +4,8 @@
 #include "../structs/Job.h"
 #include "../structs/Config.h"
 #include <vector>
+#include <cmath>
+#include <unordered_map>
 
 using namespace std;
 

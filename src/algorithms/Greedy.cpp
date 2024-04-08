@@ -1,5 +1,6 @@
 #include "../../include/algorithms/Greedy.h"
-#include <unordered_map>
+#include <algorithm>
+#include <climits>
 
 int calculateCost(queue<int>& processor, int power) {
     int load = pow(processor.size(), power);

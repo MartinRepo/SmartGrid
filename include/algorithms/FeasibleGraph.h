@@ -2,6 +2,7 @@
 #define SMARTGRID_FEASIBLEGRAPH_H
 
 #include <vector>
+#include <climits>
 #include "../structs/Job.h"
 #include "../structs/Config.h"
 
