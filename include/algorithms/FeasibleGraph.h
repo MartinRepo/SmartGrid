@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <climits>
+#include <algorithm>
 #include "../structs/Job.h"
 #include "../structs/Config.h"
 

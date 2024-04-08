@@ -42,7 +42,7 @@ function App() {
     };
     const handleClick = () => {
         setLoading(true);
-        axios.post('http://localhost:8000/api/run-algorithms', {
+        axios.post('https://demo-smartgrid.tech/api/run-algorithms', {
             selectedValues
         })
             .then(response => {
