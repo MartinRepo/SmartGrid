@@ -14,7 +14,7 @@ const Selector = ({onChange}) => (
             style={{
                 width: '100%',
             }}
-            placeholder="Please select"
+            placeholder="select some scenarios"
             defaultValue={[]}
             onChange={(values) => {
                 onChange(values);

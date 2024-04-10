@@ -255,6 +255,110 @@ vector<vector<json::value>> RunAlgorithms(json::value input) {
                 results[2].push_back(result);
                 result = getRunningTime("Genetic", "scenario 4 dataset 1", S4D1);
                 results[2].push_back(result);
+            } else if (dataset == "scenario 1 dataset 2"){
+                // execute 4 algorithms on S1D1
+                result = getTotalCost("Fixed Param Tractable", "scenario 1 dataset 2", S1D1);
+                results[0].push_back(result);
+                result = getTotalCost("Feasible Graph", "scenario 1 dataset 2", S1D1);
+                results[0].push_back(result);
+                result = getTotalCost("Greedy", "scenario 1 dataset 2", S1D1);
+                results[0].push_back(result);
+                result = getTotalCost("Genetic", "scenario 1 dataset 2", S1D1);
+                results[0].push_back(result);
+                result = getPeakCost("Fixed Param Tractable", "scenario 1 dataset 2", S1D1);
+                results[1].push_back(result);
+                result = getPeakCost("Feasible Graph", "scenario 1 dataset 2", S1D1);
+                results[1].push_back(result);
+                result = getPeakCost("Greedy", "scenario 1 dataset 2", S1D1);
+                results[1].push_back(result);
+                result = getPeakCost("Genetic", "scenario 1 dataset 2", S1D1);
+                results[1].push_back(result);
+                result = getRunningTime("Fixed Param Tractable", "scenario 1 dataset 2", S1D1);
+                results[2].push_back(result);
+                result = getRunningTime("Feasible Graph", "scenario 1 dataset 2", S1D1);
+                results[2].push_back(result);
+                result = getRunningTime("Greedy", "scenario 1 dataset 2", S1D1);
+                results[2].push_back(result);
+                result = getRunningTime("Genetic", "scenario 1 dataset 2", S1D1);
+                results[2].push_back(result);
+            } else if (dataset == "scenario 2 dataset 2"){
+                // execute 4 algorithms on S2D1
+                result = getTotalCost("Fixed Param Tractable", "scenario 2 dataset 2", S2D1);
+                results[0].push_back(result);
+                result = getTotalCost("Feasible Graph", "scenario 2 dataset 2", S2D1);
+                results[0].push_back(result);
+                result = getTotalCost("Greedy", "scenario 2 dataset 2", S2D1);
+                results[0].push_back(result);
+                result = getTotalCost("Genetic", "scenario 2 dataset 2", S2D1);
+                results[0].push_back(result);
+                result = getPeakCost("Fixed Param Tractable", "scenario 2 dataset 2", S2D1);
+                results[1].push_back(result);
+                result = getPeakCost("Feasible Graph", "scenario 2 dataset 2", S2D1);
+                results[1].push_back(result);
+                result = getPeakCost("Greedy", "scenario 2 dataset 2", S2D1);
+                results[1].push_back(result);
+                result = getPeakCost("Genetic", "scenario 2 dataset 2", S2D1);
+                results[1].push_back(result);
+                result = getRunningTime("Fixed Param Tractable", "scenario 2 dataset 2", S2D1);
+                results[2].push_back(result);
+                result = getRunningTime("Feasible Graph", "scenario 2 dataset 2", S2D1);
+                results[2].push_back(result);
+                result = getRunningTime("Greedy", "scenario 2 dataset 2", S2D1);
+                results[2].push_back(result);
+                result = getRunningTime("Genetic", "scenario 2 dataset 2", S2D1);
+                results[2].push_back(result);
+            } else if (dataset == "scenario 3 dataset 2"){
+                // execute 4 algorithms on S3D1
+                result = getTotalCost("Fixed Param Tractable", "scenario 3 dataset 2", S3D1);
+                results[0].push_back(result);
+                result = getTotalCost("Feasible Graph", "scenario 3 dataset 2", S3D1);
+                results[0].push_back(result);
+                result = getTotalCost("Greedy", "scenario 3 dataset 2", S3D1);
+                results[0].push_back(result);
+                result = getTotalCost("Genetic", "scenario 3 dataset 2", S3D1);
+                results[0].push_back(result);
+                result = getPeakCost("Fixed Param Tractable", "scenario 3 dataset 2", S3D1);
+                results[1].push_back(result);
+                result = getPeakCost("Feasible Graph", "scenario 3 dataset 2", S3D1);
+                results[1].push_back(result);
+                result = getPeakCost("Greedy", "scenario 3 dataset 2", S3D1);
+                results[1].push_back(result);
+                result = getPeakCost("Genetic", "scenario 3 dataset 2", S3D1);
+                results[1].push_back(result);
+                result = getRunningTime("Fixed Param Tractable", "scenario 3 dataset 2", S3D1);
+                results[2].push_back(result);
+                result = getRunningTime("Feasible Graph", "scenario 3 dataset 2", S3D1);
+                results[2].push_back(result);
+                result = getRunningTime("Greedy", "scenario 3 dataset 2", S3D1);
+                results[2].push_back(result);
+                result = getRunningTime("Genetic", "scenario 3 dataset 2", S3D1);
+                results[2].push_back(result);
+            } else if (dataset == "scenario 4 dataset 2"){
+                // execute 4 algorithms on S4D1
+                result = getTotalCost("Fixed Param Tractable", "scenario 4 dataset 2", S4D1);
+                results[0].push_back(result);
+                result = getTotalCost("Feasible Graph", "scenario 4 dataset 2", S4D1);
+                results[0].push_back(result);
+                result = getTotalCost("Greedy", "scenario 4 dataset 2", S4D1);
+                results[0].push_back(result);
+                result = getTotalCost("Genetic", "scenario 4 dataset 2", S4D1);
+                results[0].push_back(result);
+                result = getPeakCost("Fixed Param Tractable", "scenario 4 dataset 2", S4D1);
+                results[1].push_back(result);
+                result = getPeakCost("Feasible Graph", "scenario 4 dataset 2", S4D1);
+                results[1].push_back(result);
+                result = getPeakCost("Greedy", "scenario 4 dataset 2", S4D1);
+                results[1].push_back(result);
+                result = getPeakCost("Genetic", "scenario 4 dataset 2", S4D1);
+                results[1].push_back(result);
+                result = getRunningTime("Fixed Param Tractable", "scenario 4 dataset 2", S4D1);
+                results[2].push_back(result);
+                result = getRunningTime("Feasible Graph", "scenario 4 dataset 2", S4D1);
+                results[2].push_back(result);
+                result = getRunningTime("Greedy", "scenario 4 dataset 2", S4D1);
+                results[2].push_back(result);
+                result = getRunningTime("Genetic", "scenario 4 dataset 2", S4D1);
+                results[2].push_back(result);
             }
         }
         return results;

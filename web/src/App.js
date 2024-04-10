@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import Selector from "./Selector/Selector";
 import ScenarioCollapse from "./ScenarioCollapse/ScenarioCollapse";
 import {Button, Tabs, Timeline} from "antd";
-import { SmileOutlined, ClockCircleOutlined } from '@ant-design/icons';
+import { ClockCircleOutlined } from '@ant-design/icons';
 import { renderScatter, renderBar, renderSummary } from "./Chart/Chart";
+import Footer from "./Footer/Footer"
 import axios from 'axios';
 function App() {
     const [loading, setLoading] = useState(false);
@@ -42,7 +43,10 @@ function App() {
     };
     const handleClick = () => {
         setLoading(true);
-        axios.post('https://demo-smartgrid.tech/api/run-algorithms', {
+        // axios.post('https://demo-smartgrid.tech/api/run-algorithms', {
+            // selectedValues
+        // })
+        axios.post('http://localhost:8000/api/run-algorithms', {
             selectedValues
         })
             .then(response => {
@@ -96,7 +100,7 @@ function App() {
             DEMO SITE
         </h2>
         <h2>
-            Choose some scenarios to compare
+            Scenarios Dataset Selection
         </h2>
         <Selector onChange={handleSelectorChange}/>
         {!loading ?
@@ -109,7 +113,7 @@ function App() {
             </div>
         }
         <h2>
-            Check all of scenarios below
+            Scenario Dataset Details
         </h2>
         <ScenarioCollapse/>
         {showChart &&
@@ -121,6 +125,7 @@ function App() {
         <h2>Project Timeline</h2>
         <Timeline mode='left'
                   style={{ width: '80%' }}
+                  pending={"Project discussion & Dissertation writing"}
             items={[
                 {
                     label: '2023-09-16',
@@ -175,16 +180,19 @@ function App() {
                 },
                 {
                     label: '2024-04-06',
-                    color: 'green',
+                    color: 'red',
+                    dot: <ClockCircleOutlined />,
                     children: <p>Deploy demo site <a href='https://demo-smartgrid.tech'>https://demo-smartgrid.tech</a></p>,
                 },
-                {
-                    color: '#00CCFF',
-                    dot: <SmileOutlined />,
-                    children: 'Congrats! 🎉',
-                },
+                // {
+                //     label: '2024-04-07',
+                //     color: '#00CCFF',
+                //     dot: <SmileOutlined />,
+                //     children: 'Congrats! 🎉',
+                // },
             ]}
         />
+        <Footer/>
     </div>
   );
 }
