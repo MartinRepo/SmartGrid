@@ -6,6 +6,7 @@ import { ClockCircleOutlined } from '@ant-design/icons';
 import { renderScatter, renderBar, renderSummary } from "./Chart/Chart";
 import Footer from "./Footer/Footer"
 import axios from 'axios';
+import "./App.css"
 function App() {
     const [loading, setLoading] = useState(false);
     const [showChart, setShowChart] = useState(false);
@@ -125,7 +126,7 @@ function App() {
         <h2>Project Timeline</h2>
         <Timeline mode='left'
                   style={{ width: '80%' }}
-                  pending={"Project discussion & Dissertation writing"}
+                  pending={"Website Audit & Project discussion & Dissertation writing"}
             items={[
                 {
                     label: '2023-09-16',
@@ -164,13 +165,11 @@ function App() {
                 },
                 {
                     label: '2024-03-14',
-                    color: 'green',
                     children: 'Prepare dataset for all scenarios',
                 },
                 {
                     label: '2024-03-20',
-                    color: 'red',
-                    dot: <ClockCircleOutlined />,
+                    color: 'green',
                     children: 'technical testing',
                 },
                 {
