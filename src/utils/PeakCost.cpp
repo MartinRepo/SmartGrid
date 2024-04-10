@@ -14,10 +14,10 @@ int GeneralPeakCost(const vector<Job> &jobs, const vector<Config> &Solution, con
             sum += jobs[it].height;
         }
         if (sum > result) {
-            result = pow(sum, power);
+            result = sum;
         }
     }
-    return result;
+    return pow(result, power);
 }
 
 int GreedyPeakCost(vector<Job> jobs, vector<pair<Config, int>> & Solution, const int boundary, const int power) {
