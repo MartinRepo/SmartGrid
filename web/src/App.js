@@ -44,13 +44,9 @@ function App() {
     };
     const handleClick = () => {
         setLoading(true);
-        // axios.post('https://demo-smartgrid.tech/api/run-algorithms', {
-            // selectedValues
-        // })
-        axios.post('http://localhost:8000/api/run-algorithms', {
+        axios.post('https://demo-smartgrid.tech/api/run-algorithms', {
             selectedValues
-        })
-            .then(response => {
+        }).then(response => {
                 console.log(response.data);
                 setTotalCost(response.data.TotalCost);
                 setPeakCost(response.data.PeakCost);
