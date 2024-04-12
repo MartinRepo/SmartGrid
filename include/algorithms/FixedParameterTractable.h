@@ -14,10 +14,6 @@ using Table = vector<Config>;
 bool isValid(const Config &config, const Job &job,
              std::pair<int, int> window);
 
-int isCompatible(const std::pair<int, int> &left, const std::pair<int, int> &right,
-                 const std::pair<int, int> windowLeft, const std::pair<int, int> windowI,
-                 Job job);
-
 std::pair<int, int> concatenate(const std::pair<int, int> &left,
                                 const std::pair<int, int> &right, int type);
 
