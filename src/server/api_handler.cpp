@@ -8,6 +8,7 @@
 #include "../../include/utils/PeakCost.h"
 
 json::value getTotalCost(const std::string& algorithmName, const std::string& datasetName, vector<Job>& dataset) {
+    cout<<"Start calculating total cost for "<<algorithmName<<endl;
     vector<Config> solution;
     int totalCost = 0;
 
@@ -33,10 +34,12 @@ json::value getTotalCost(const std::string& algorithmName, const std::string& da
     result[U("algorithm")] = json::value::string(algorithmName);
     result[U("dataset")] = json::value::string(datasetName);
     result[U("Total Power Cost")] = json::value::number(totalCost);
+    cout<<"Calculating total cost completed"<<endl;
     return result;
 }
 
 json::value getPeakCost(const std::string& algorithmName, const std::string& datasetName, vector<Job>& dataset) {
+    cout<<"Start calculating peak cost for "<<algorithmName<<endl;
     vector<Config> solution;
     int peakCost = 0;
 
@@ -62,10 +65,12 @@ json::value getPeakCost(const std::string& algorithmName, const std::string& dat
     result[U("algorithm")] = json::value::string(algorithmName);
     result[U("dataset")] = json::value::string(datasetName);
     result[U("Peak Power Cost")] = json::value::number(peakCost);
+    cout<<"Calculating peak cost completed"<<endl;
     return result;
 }
 
 json::value getRunningTime(const std::string& algorithmName, const std::string& datasetName, vector<Job>& dataset) {
+    cout<<"Start calculating running time for "<<algorithmName<<endl;
     auto start = std::chrono::high_resolution_clock::now();
     if (algorithmName == "Fixed Param Tractable") {
         vector<Config> solution = FindOptimalConfiguration(dataset);
@@ -83,10 +88,12 @@ json::value getRunningTime(const std::string& algorithmName, const std::string& 
     result[U("algorithm")] = json::value::string(algorithmName);
     result[U("dataset")] = json::value::string(datasetName);
     result[U("Running Time /µs")] = json::value::number(duration.count());
+    cout<<"Calculating running time completed"<<endl;
     return result;
 }
 
 vector<vector<json::value>> RunAlgorithms(json::value input) {
+    cout<<"Start running algorithms..."<<endl;
     vector<Job> S1D1 = {
             {0, 1, 14, 1, 1},
             {1, 0, 2, 1, 1},
@@ -361,6 +368,7 @@ vector<vector<json::value>> RunAlgorithms(json::value input) {
                 results[2].push_back(result);
             }
         }
+        cout<<"Algorithms executed successfully, return result..."<<endl;
         return results;
     } else {
         // input json is unexpected
