@@ -25,6 +25,19 @@ vector<Job> Jobs = {
         {10, 12, 14, 1, 1}
 };
 
+vector<Job> GreedyJobs = {
+        {0, 0, 2, 2, 1},
+        {1, 0, 2, 2, 1},
+        {2, 0, 2, 2, 1},
+        {3, 0, 2, 2, 1},
+        {4, 2, 4, 2, 1},
+        {5, 2, 4, 2, 1},
+        {6, 2, 4, 2, 1},
+        {7, 3, 5, 2, 1},
+        {8, 3, 5, 2, 1},
+        {9, 3, 5, 2, 1},
+};
+
 TEST(UtilsTest, TotalCostTest) {
     Table FPTConfiguration = FindOptimalConfiguration(Jobs);
     int TotalCost = GeneralTotalCost(Jobs, FPTConfiguration, 14, 2);
@@ -47,7 +60,7 @@ TEST(AlgoTest, FPTTest){
 
 TEST(AlgoTest, GreedyTest){
     cout<<"############## This is the Greedy's solution ##############"<<endl;
-    vector<pair<Config, int>> GreedySolution = greedyScheduler(Jobs, 4);
+    vector<pair<Config, int>> GreedySolution = greedyScheduler(GreedyJobs, 4);
     for(const auto & a : GreedySolution) {
         cout << "Job "<<a.first.id << " is scheduled on machine " << a.second << " scheduling time is from " << a.first.startTime << " to " << a.first.endTime << endl;
     }

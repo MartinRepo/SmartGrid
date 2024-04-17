@@ -49,7 +49,6 @@ function App() {
         axios.post(url, {
             selectedValues
         }).then(response => {
-                console.log(response.data);
                 setTotalCost(response.data.TotalCost);
                 setPeakCost(response.data.PeakCost);
                 setRunningTime(response.data.RunningTime);
