@@ -1,10 +1,10 @@
-#include <cpprest/http_listener.h>              // HTTP server
-#include <cpprest/json.h>                        // JSON library
+#include <cpprest/http_listener.h>
+#include <cpprest/json.h>
 #include <iostream>
 #include <csignal>
 #include <thread>
 #include "../include/algorithms/Greedy.h"
-#include "../include/server/api_handler.h"
+#include "../include/controller/api_handler.h"
 
 using namespace web;
 using namespace web::http;
