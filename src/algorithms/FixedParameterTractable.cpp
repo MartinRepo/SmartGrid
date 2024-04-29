@@ -150,18 +150,35 @@ Table FindOptimalConfiguration(const vector<Job> &jobs) {
         }
     }
 
-    int maxBoundary = 0;
-    for(auto & job : jobs) {
-        if(job.deadline>maxBoundary) {
-            maxBoundary = job.deadline;
+    bool isUnitWidth = true;
+    for(auto& job : jobs){
+        if(job.width != 1){
+            isUnitWidth = false;
+            break;
         }
     }
-    if(maxBoundary%2 != 0) {
-        maxBoundary += 1;
-    }
+
     vector<int> boundaries;
-    for(int i = 0; i<=maxBoundary; i+=2) {
-        boundaries.push_back(i);
+
+    if(isUnitWidth){
+        int maxBoundary = 0;
+        for(auto & job : jobs) {
+            if(job.deadline>maxBoundary) {
+                maxBoundary = job.deadline;
+            }
+        }
+        if(maxBoundary%2 != 0) {
+            maxBoundary += 1;
+        }
+        for(int i = 0; i<=maxBoundary; i+=2) {
+            boundaries.push_back(i);
+        }
+    } else {
+        for(auto & job : jobs) {
+            boundaries.push_back(job.releaseTime);
+            boundaries.push_back(job.deadline);
+        }
+        sort(boundaries.begin(), boundaries.end());
     }
 
     vector<pair<int, int>> windows;
