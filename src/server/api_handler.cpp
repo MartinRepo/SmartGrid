@@ -159,7 +159,7 @@ vector<vector<json::value>> RunAlgorithms(json::value input) {
         json::value result = json::value::object();
         for(auto& dataset : datasets) {
             if(dataset == "scenario 1 dataset 1"){
-                // execute 4 algorithms on S1D1
+                // execute 4 algorithms on S1D1, get total cost
                 result = getTotalCost("Fixed Param Tractable", "scenario 1 dataset 1", S1D1);
                 results[0].push_back(result);
                 result = getTotalCost("Feasible Graph", "scenario 1 dataset 1", S1D1);
@@ -168,6 +168,7 @@ vector<vector<json::value>> RunAlgorithms(json::value input) {
                 results[0].push_back(result);
                 result = getTotalCost("Genetic", "scenario 1 dataset 1", S1D1);
                 results[0].push_back(result);
+                // get peak cost
                 result = getPeakCost("Fixed Param Tractable", "scenario 1 dataset 1", S1D1);
                 results[1].push_back(result);
                 result = getPeakCost("Feasible Graph", "scenario 1 dataset 1", S1D1);
@@ -176,6 +177,7 @@ vector<vector<json::value>> RunAlgorithms(json::value input) {
                 results[1].push_back(result);
                 result = getPeakCost("Genetic", "scenario 1 dataset 1", S1D1);
                 results[1].push_back(result);
+                // get running time
                 result = getRunningTime("Fixed Param Tractable", "scenario 1 dataset 1", S1D1);
                 results[2].push_back(result);
                 result = getRunningTime("Feasible Graph", "scenario 1 dataset 1", S1D1);

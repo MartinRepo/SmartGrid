@@ -38,6 +38,13 @@ vector<Job> GreedyJobs = {
         {9, 3, 5, 2, 1},
 };
 
+vector<Job> GeneticJobs = {
+        {0, 0, 2, 1, 1},
+        {1, 1, 3, 1, 1},
+        {2, 2, 4, 1, 1},
+        {3, 3, 5, 1, 1},
+};
+
 TEST(UtilsTest, TotalCostTest) {
     Table FPTConfiguration = FindOptimalConfiguration(Jobs);
     int TotalCost = GeneralTotalCost(Jobs, FPTConfiguration, 14, 2);
@@ -62,7 +69,7 @@ TEST(AlgoTest, GreedyTest){
     cout<<"############## This is the Greedy's solution ##############"<<endl;
     vector<pair<Config, int>> GreedySolution = greedyScheduler(GreedyJobs, 4);
     for(const auto & a : GreedySolution) {
-        cout << "Job "<<a.first.id << " is scheduled on machine " << a.second << " scheduling time is from " << a.first.startTime << " to " << a.first.endTime << endl;
+        cout << "Job "<<a.first.id << " is scheduled on machine " << a.second << " scheduled time is from " << a.first.startTime << " to " << a.first.endTime << endl;
     }
 }
 
@@ -76,7 +83,7 @@ TEST(AlgoTest, FGTest){
 
 TEST(AlgoTest, GeneticTest) {
     cout << "############## This is the Genetic's solution ##############" << endl;
-    vector<Config> genetic = geneticAlgorithm(Jobs, 20);
+    vector<Config> genetic = geneticAlgorithm(GeneticJobs, 20);
     for (auto &a: genetic) {
         cout << "Job " << a.id << " is scheduled from " << a.startTime << " to " << a.endTime << endl;
     }

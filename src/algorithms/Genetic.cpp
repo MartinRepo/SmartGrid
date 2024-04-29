@@ -175,7 +175,7 @@ vector<Config> geneticAlgorithm(vector<Job> jobs, int solutionNum) {
         }
         population = newPopulation;
         // Optionally, include some logic to check for the termination condition
-        optimalSolution = population[0];
+        optimalSolution = population[newPopulation.size()-1];
         for(auto& solution : population) {
             if(solution.fitness < optimalSolution.fitness) optimalSolution = solution;
         }
