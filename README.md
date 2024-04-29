@@ -1,7 +1,7 @@
 # Scheduling for Smart Grid
 >Authored by: @[Martingale](https://github.com/MartinRepo)
 
-Click [here](https://demo-smartgrid.tech) to visit demo site. Just try it :)
+>Click [here](https://demo-smartgrid.tech) to visit demo site. Just try it. :D
 ## Content
 - [Algorithms Implementation](#algorithms-implementation)
   - [Feasible Graph](#feasible-graph)
@@ -37,13 +37,12 @@ return any configuration in Tleft
 ### Greedy
 Job is assigned to the machine with the smallest number of jobs currently assigned.
 ### Genetic
-Through constant crossover mutations 
-
+Regard a solution as an individual. Then through constant crossover mutations
 (crossover: crossing two schedules to generate a new schedule. 
 
 Mutation: randomly changing the position or time of a task within a feasible interval.).
 
-I use the fitness function to decide which scheduling scheme is kept and which is filtered out.
+It uses the fitness function (calculating peak cost) to decide which scheduling scheme is kept and which is filtered out.
 ## Dataset Preview
 There are 11 jobs, 6 windows, 7 boundaries.Their width(duration) and height(power cost) is adjusted
 
