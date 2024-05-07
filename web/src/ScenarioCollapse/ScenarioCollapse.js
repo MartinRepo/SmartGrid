@@ -44,7 +44,7 @@ function ScenarioCollapse({
             // Create an object for each entry
             dataSource.push({
                 key: i.toString(),
-                number: i,
+                id: i,
                 releaseTime: releaseTime,
                 deadline: deadline,
                 width: width,
@@ -109,8 +109,8 @@ function ScenarioCollapse({
     const columns = [
         {
             title: 'Job No',
-            dataIndex: 'number',
-            key: 'number',
+            dataIndex: 'id',
+            key: 'id',
         },
         {
             title: 'Release time',

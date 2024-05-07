@@ -51,28 +51,28 @@ function App() {
                 if(S1dataSource.length === 0){
                     alert("Generate data firstly, plz");
                 } else {
-                    newSelectedValues.push(S1dataSource);
+                    newSelectedValues.push(["scenario1", S1dataSource]);
                 }
             }
             if (value.includes('2')) {
                 if(S2dataSource.length === 0){
                     alert("Generate data firstly, plz");
                 } else {
-                    newSelectedValues.push(S2dataSource);
+                    newSelectedValues.push(["scenario2", S2dataSource]);
                 }
             }
             if (value.includes('3')) {
                 if(S3dataSource.length === 0){
                     alert("Generate data firstly, plz");
                 } else {
-                    newSelectedValues.push(S3dataSource);
+                    newSelectedValues.push(["scenario3", S3dataSource]);
                 }
             }
             if (value.includes('4')) {
                 if(S4dataSource.length === 0){
                     alert("Generate data firstly, plz");
                 } else {
-                    newSelectedValues.push(S4dataSource);
+                    newSelectedValues.push(["scenario4", S4dataSource]);
                 }
             }
         }
