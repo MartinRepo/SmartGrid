@@ -45,7 +45,38 @@ function App() {
     };
 
     const handleSelectorChange = values => {
-        setSelectedValues(values);
+        const newSelectedValues = [];
+        for(const value of values){
+            if (value.includes('1')) {
+                if(S1dataSource.length === 0){
+                    alert("Generate data firstly, plz");
+                } else {
+                    newSelectedValues.push(S1dataSource);
+                }
+            }
+            if (value.includes('2')) {
+                if(S2dataSource.length === 0){
+                    alert("Generate data firstly, plz");
+                } else {
+                    newSelectedValues.push(S2dataSource);
+                }
+            }
+            if (value.includes('3')) {
+                if(S3dataSource.length === 0){
+                    alert("Generate data firstly, plz");
+                } else {
+                    newSelectedValues.push(S3dataSource);
+                }
+            }
+            if (value.includes('4')) {
+                if(S4dataSource.length === 0){
+                    alert("Generate data firstly, plz");
+                } else {
+                    newSelectedValues.push(S4dataSource);
+                }
+            }
+        }
+        setSelectedValues(newSelectedValues);
     };
     const handleClick = () => {
         setLoading(true);
