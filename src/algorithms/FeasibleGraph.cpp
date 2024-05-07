@@ -56,7 +56,7 @@ vector<Config> offlineScheduling(vector<Job> &jobs, int numTimeSlots) {
         for (int t = 0; t < numTimeSlots; t++) {
             int currentLoad = 0;
             for (const Edge &e : feasibleGraph[t]) {
-                currentLoad += e.job.width;
+                currentLoad += e.job.height;
             }
             if (currentLoad < minLoad) {
                 bestTimeSlot = t;

@@ -1,483 +1,206 @@
-import React from "react";
-import { Table } from "antd";
-import { Collapse } from "antd";
+import React, {useState} from "react";
+import { Table, Collapse, Button } from "antd";
+function Scenarios() {
+    const [loading1, setLoading1] = useState(false);
+    const [loading2, setLoading2] = useState(false);
+    const [loading3, setLoading3] = useState(false);
+    const [loading4, setLoading4] = useState(false);
 
-const S11dataSource = [
-    {
-        key: '1',
-        number: 1,
-        releaseTime: 1,
-        deadline: 14,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '2',
-        number: 2,
-        releaseTime: 0,
-        deadline: 2,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '3',
-        number: 3,
-        releaseTime: 3,
-        deadline: 5,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '4',
-        number: 4,
-        releaseTime: 4,
-        deadline: 8,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '5',
-        number: 5,
-        releaseTime: 5,
-        deadline: 13,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '6',
-        number: 6,
-        releaseTime: 6,
-        deadline: 8,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '7',
-        number: 7,
-        releaseTime: 7,
-        deadline: 8,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '8',
-        number: 8,
-        releaseTime: 9,
-        deadline: 10,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '9',
-        number: 9,
-        releaseTime: 10,
-        deadline: 11,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '10',
-        number: 10,
-        releaseTime: 11,
-        deadline: 13,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '11',
-        number: 11,
-        releaseTime: 12,
-        deadline: 14,
-        width: 1,
-        height: 1,
-    },
-];
+    const [S1dataSource, setS1dataSource] = useState([]);
+    const [S2dataSource, setS2dataSource] = useState([]);
+    const [S3dataSource, setS3dataSource] = useState([]);
+    const [S4dataSource, setS4dataSource] = useState([]);
 
-const S2dataSource = [
-    {
-        key: '1',
-        number: 1,
-        releaseTime: 1,
-        deadline: 14,
-        width: 1,
-        height: 2,
-    },
-    {
-        key: '2',
-        number: 2,
-        releaseTime: 0,
-        deadline: 2,
-        width: 1,
-        height: 4,
-    },
-    {
-        key: '3',
-        number: 3,
-        releaseTime: 3,
-        deadline: 5,
-        width: 1,
-        height: 4,
-    },
-    {
-        key: '4',
-        number: 4,
-        releaseTime: 4,
-        deadline: 8,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '5',
-        number: 5,
-        releaseTime: 5,
-        deadline: 13,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '6',
-        number: 6,
-        releaseTime: 6,
-        deadline: 8,
-        width: 1,
-        height: 6,
-    },
-    {
-        key: '7',
-        number: 7,
-        releaseTime: 7,
-        deadline: 8,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '8',
-        number: 8,
-        releaseTime: 9,
-        deadline: 10,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '9',
-        number: 9,
-        releaseTime: 10,
-        deadline: 11,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '10',
-        number: 10,
-        releaseTime: 11,
-        deadline: 13,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '11',
-        number: 11,
-        releaseTime: 12,
-        deadline: 14,
-        width: 1,
-        height: 1,
-    },
-];
+    function generateRandomData(numEntries, type) {
+        const dataSource = [];
 
-const S3dataSource = [
-    {
-        key: '1',
-        number: 1,
-        releaseTime: 1,
-        deadline: 14,
-        width: 4,
-        height: 1,
-    },
-    {
-        key: '2',
-        number: 2,
-        releaseTime: 0,
-        deadline: 2,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '3',
-        number: 3,
-        releaseTime: 3,
-        deadline: 5,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '4',
-        number: 4,
-        releaseTime: 4,
-        deadline: 8,
-        width: 2,
-        height: 1,
-    },
-    {
-        key: '5',
-        number: 5,
-        releaseTime: 5,
-        deadline: 13,
-        width: 3,
-        height: 1,
-    },
-    {
-        key: '6',
-        number: 6,
-        releaseTime: 6,
-        deadline: 8,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '7',
-        number: 7,
-        releaseTime: 7,
-        deadline: 8,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '8',
-        number: 8,
-        releaseTime: 9,
-        deadline: 10,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '9',
-        number: 9,
-        releaseTime: 10,
-        deadline: 11,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '10',
-        number: 10,
-        releaseTime: 11,
-        deadline: 13,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '11',
-        number: 11,
-        releaseTime: 12,
-        deadline: 14,
-        width: 1,
-        height: 1,
-    },
-];
+        for (let i = 1; i <= numEntries; i++) {
+            // Randomly generate width and height between 1 and 3 (you can adjust these values)
+            let width;
+            let height;
+            if(type === 1) {
+                width = 1;
+                height = 1;
+            } else if (type === 2) {
+                width = 1;
+                height = Math.floor(Math.random() * 3) + 1;
+            } else if (type === 3) {
+                width = Math.floor(Math.random() * 3) + 1;
+                height = 1;
+            } else if (type === 4) {
+                width = Math.floor(Math.random() * 3) + 1;
+                height = Math.floor(Math.random() * 3) + 1;
+            }
+            // Generate releaseTime randomly within a realistic range (e.g., 0 to 10)
+            const releaseTime = Math.floor(Math.random() * 11);
 
-const S4dataSource = [
-    {
-        key: '1',
-        number: 1,
-        releaseTime: 1,
-        deadline: 14,
-        width: 4,
-        height: 2,
-    },
-    {
-        key: '2',
-        number: 2,
-        releaseTime: 0,
-        deadline: 2,
-        width: 1,
-        height: 4,
-    },
-    {
-        key: '3',
-        number: 3,
-        releaseTime: 3,
-        deadline: 5,
-        width: 1,
-        height: 4,
-    },
-    {
-        key: '4',
-        number: 4,
-        releaseTime: 4,
-        deadline: 8,
-        width: 2,
-        height: 1,
-    },
-    {
-        key: '5',
-        number: 5,
-        releaseTime: 5,
-        deadline: 13,
-        width: 3,
-        height: 1,
-    },
-    {
-        key: '6',
-        number: 6,
-        releaseTime: 6,
-        deadline: 8,
-        width: 1,
-        height: 6,
-    },
-    {
-        key: '7',
-        number: 7,
-        releaseTime: 7,
-        deadline: 8,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '8',
-        number: 8,
-        releaseTime: 9,
-        deadline: 10,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '9',
-        number: 9,
-        releaseTime: 10,
-        deadline: 11,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '10',
-        number: 10,
-        releaseTime: 11,
-        deadline: 13,
-        width: 1,
-        height: 1,
-    },
-    {
-        key: '11',
-        number: 11,
-        releaseTime: 12,
-        deadline: 14,
-        width: 1,
-        height: 1,
-    },
-];
-const columns = [
-    {
-        title: 'Job No',
-        dataIndex: 'number',
-        key: 'number',
-    },
-    {
-        title: 'Release time',
-        dataIndex: 'releaseTime',
-        key: 'releaseTime',
-    },
-    {
-        title: 'Deadline',
-        dataIndex: 'deadline',
-        key: 'deadline',
-    },
-    {
-        title: 'Duration',
-        dataIndex: 'width',
-        key: 'width',
-    },
-    {
-        title: 'Power cost',
-        dataIndex: 'height',
-        key: 'height',
-    },
-];
+            // Ensure deadline - releaseTime >= width by setting deadline accordingly
+            const deadline = releaseTime + width + Math.floor(Math.random() * 10); // Adding random value to ensure diversity
 
-const s1DataSource = [
-    {
-        key: '1',
-        label: 'Dataset 1',
-        children: <Table dataSource={S11dataSource} columns={columns} />,
-    },
-    {
-        key: '2',
-        label: 'Dataset 2',
-        children: <Table dataSource={S11dataSource} columns={columns} />,
-    },
-];
+            // Create an object for each entry
+            dataSource.push({
+                key: i.toString(),
+                number: i,
+                releaseTime: releaseTime,
+                deadline: deadline,
+                width: width,
+                height: height
+            });
+        }
 
-const s2DataSource = [
-    {
-        key: '1',
-        label: 'Dataset 1',
-        children: <Table dataSource={S2dataSource} columns={columns} />,
-    },
-    {
-        key: '2',
-        label: 'Dataset 2',
-        children: <Table dataSource={S2dataSource} columns={columns} />,
-    },
-];
+        return dataSource;
+    }
 
-const s3DataSource = [
-    {
-        key: '1',
-        label: 'Dataset 1',
-        children: <Table dataSource={S3dataSource} columns={columns} />,
-    },
-    {
-        key: '2',
-        label: 'Dataset 2',
-        children: <Table dataSource={S3dataSource} columns={columns} />,
-    },
-];
+    function handleClick(type) {
+        switch (type) {
+            case 1:
+                setLoading1(true);
+                setTimeout(() => {
+                    const newDatasets = [];
+                    for (let i = 0; i < 10; i++) {
+                        newDatasets.push(generateRandomData(11, 1));
+                    }
+                    setS1dataSource(newDatasets);
+                    setLoading1(false);
+                }, 1000);
+                break;
+            case 2:
+                setLoading2(true);
+                setTimeout(() => {
+                    const newDatasets = [];
+                    for (let i = 0; i < 10; i++) {
+                        newDatasets.push(generateRandomData(11, 2));
+                    }
+                    setS2dataSource(newDatasets);
+                    setLoading2(false);
+                }, 1000);
+                break;
+            case 3:
+                setLoading3(true);
+                setTimeout(() => {
+                    const newDatasets = [];
+                    for (let i = 0; i < 10; i++) {
+                        newDatasets.push(generateRandomData(11, 3));
+                    }
+                    setS3dataSource(newDatasets);
+                    setLoading3(false);
+                }, 1000);
+                break;
+            case 4:
+                setLoading4(true);
+                setTimeout(() => {
+                    const newDatasets = [];
+                    for (let i = 0; i < 10; i++) {
+                        newDatasets.push(generateRandomData(11, 4));
+                    }
+                    setS4dataSource(newDatasets);
+                    setLoading4(false);
+                }, 1000);
+                break;
+            default:
+                break;
+        }
+    }
 
-const s4DataSource = [
-    {
-        key: '1',
-        label: 'Dataset 1',
-        children: <Table dataSource={S4dataSource} columns={columns} />,
-    },
-    {
-        key: '2',
-        label: 'Dataset 2',
-        children: <Table dataSource={S4dataSource} columns={columns} />,
-    },
-];
+    const columns = [
+        {
+            title: 'Job No',
+            dataIndex: 'number',
+            key: 'number',
+        },
+        {
+            title: 'Release time',
+            dataIndex: 'releaseTime',
+            key: 'releaseTime',
+        },
+        {
+            title: 'Deadline',
+            dataIndex: 'deadline',
+            key: 'deadline',
+        },
+        {
+            title: 'Duration',
+            dataIndex: 'width',
+            key: 'width',
+        },
+        {
+            title: 'Power cost',
+            dataIndex: 'height',
+            key: 'height',
+        },
+    ];
 
-const scenarios = [
-    {
-        key: '1',
-        label: 'Scenario 1',
-        children:   <>
-                    <strong>unit duration, unit power cost</strong>
-                    <Collapse accordion items={s1DataSource} />
-                    </>,
-    },
-    {
-        key: '2',
-        label: 'Scenario 2',
-        children:   <>
-                    <strong>unit duration, arbitrary power cost</strong>
-                    <Collapse accordion items={s2DataSource} />
-                    </>,
-    },
-    {
-        key: '3',
-        label: 'Scenario 3',
-        children:   <>
-                    <strong>arbitrary duration, unit power cost</strong>
-                    <Collapse accordion items={s3DataSource} />
-                    </>,
-    },
-    {
-        key: '4',
-        label: 'Scenario 4',
-        children:   <>
-                    <strong>arbitrary duration, arbitrary power cost</strong>
-                    <Collapse accordion items={s4DataSource} />
-                    </>,
-    },
-];
-
-export default scenarios;
+    const scenarios = [
+        {
+            key: '1',
+            label: 'Scenario 1',
+            children: <>
+                <strong>unit duration, unit power cost</strong>
+                <Collapse accordion>
+                    {S1dataSource.map((dataSource, index) => (
+                        <Collapse.Panel header={`Dataset ${index + 1}`} key={index}>
+                            <Table dataSource={dataSource} columns={columns} />
+                        </Collapse.Panel>
+                    ))}
+                </Collapse>
+                <br />
+                <Button loading={loading1} onClick={() => handleClick(1)}>Generate data!</Button>
+            </>,
+        },
+        {
+            key: '2',
+            label: 'Scenario 2',
+            children: <>
+                <strong>unit duration, arbitrary power cost</strong>
+                <Collapse accordion>
+                    {S2dataSource.map((dataSource, index) => (
+                        <Collapse.Panel header={`Dataset ${index + 1}`} key={index}>
+                            <Table dataSource={dataSource} columns={columns} />
+                        </Collapse.Panel>
+                    ))}
+                </Collapse>
+                <br />
+                <Button loading={loading2} onClick={() => handleClick(2)}>Generate data!</Button>
+            </>,
+        },
+        {
+            key: '3',
+            label: 'Scenario 3',
+            children: <>
+                <strong>arbitrary duration, unit power cost</strong>
+                <Collapse accordion>
+                    {S3dataSource.map((dataSource, index) => (
+                        <Collapse.Panel header={`Dataset ${index + 1}`} key={index}>
+                            <Table dataSource={dataSource} columns={columns} />
+                        </Collapse.Panel>
+                    ))}
+                </Collapse>
+                <br />
+                <Button loading={loading3} onClick={() => handleClick(3)}>Generate data!</Button>
+            </>,
+        },
+        {
+            key: '4',
+            label: 'Scenario 4',
+            children: <>
+                <strong>arbitrary duration, arbitrary power cost</strong>
+                <Collapse accordion>
+                    {S4dataSource.map((dataSource, index) => (
+                        <Collapse.Panel header={`Dataset ${index + 1}`} key={index}>
+                            <Table dataSource={dataSource} columns={columns} />
+                        </Collapse.Panel>
+                    ))}
+                </Collapse>
+                <br />
+                <Button loading={loading4} onClick={() => handleClick(4)}>Generate data!</Button>
+            </>,
+        },
+    ];
+    return <Collapse style={{width: '60%'}} defaultActiveKey={['1']} accordion>{scenarios.map(scenario => (
+        <Collapse.Panel header={scenario.label} key={scenario.key}>
+            {scenario.children}
+        </Collapse.Panel>
+    ))}
+    </Collapse>;
+}
+export default Scenarios;
