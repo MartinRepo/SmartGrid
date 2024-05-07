@@ -16,6 +16,11 @@ function App() {
     const [peakCost, setPeakCost] = useState([]);
     const [runningTime, setRunningTime] = useState([]);
 
+    const [S1dataSource, setS1dataSource] = useState([]);
+    const [S2dataSource, setS2dataSource] = useState([]);
+    const [S3dataSource, setS3dataSource] = useState([]);
+    const [S4dataSource, setS4dataSource] = useState([]);
+
     useEffect(() => {
         if(activeTabKey === '1' && showChart) {
             setTimeout(() => {
@@ -113,7 +118,7 @@ function App() {
         <h2>
             Scenario Dataset Details
         </h2>
-        <ScenarioCollapse/>
+        <ScenarioCollapse S1dataSource={S1dataSource} S2dataSource={S2dataSource} S3dataSource={S3dataSource} S4dataSource={S4dataSource} setS1dataSource={setS1dataSource} setS2dataSource={setS2dataSource} setS3dataSource={setS3dataSource} setS4dataSource={setS4dataSource}/>
         {showChart &&
             <>
             <h2>Performance Comparison Result</h2>
