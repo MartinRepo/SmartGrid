@@ -3,17 +3,22 @@
 #include <climits>
 #include <cmath>
 
-int calculateCost(queue<int>& processor, int power) {
-    int load = pow(processor.size(), power);
-    return load;
-}
-
-int findLowestLoadMachines(vector<queue<int>>& processors) {
+int findLowestLoadMachines(vector<queue<int>>& processors, vector<Job>& jobs, int power) {
     int min = INT_MAX;
     int min_index = -1;
     int cost;
     for (int i = 0; i<processors.size(); i++) {
-        cost = calculateCost(processors[i], 2);
+        int height = 0;
+        queue<int> processor_copy = processors[i];
+        while(!processor_copy.empty()){
+            for(auto & job : jobs) {
+                if(processor_copy.front() == job.id){
+                    height+=job.height;
+                }
+            }
+            processor_copy.pop();
+        }
+        cost = pow(height, power);
         if (cost<min) {
             min = cost;
             min_index = i;
@@ -42,7 +47,7 @@ vector<pair<Config, int>> greedyScheduler(vector<Job>& jobs, int num_processors)
         }
         if (time >= currentJobReleaseTime) {
             while(!jobQueue.empty()) {
-                int machineIndex = findLowestLoadMachines(processors);
+                int machineIndex = findLowestLoadMachines(processors, jobs, 2);
                 Job newJob = jobQueue.top();
                 processors[machineIndex].push(newJob.id);
                 Config config{newJob.id, time, time+newJob.width};

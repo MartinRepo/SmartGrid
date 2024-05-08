@@ -12,9 +12,7 @@ struct CompareReleaseTime {
     }
 };
 
-int calculateCost(queue<int>& processor, int power);
-
-int findLowestLoadMachines(vector<queue<int>>& processors);
+int findLowestLoadMachines(vector<queue<int>>& processors, vector<Job>& jobs, int power);
 
 vector<pair<Config, int>>  greedyScheduler(vector<Job>& jobs, int num_processors);
 
